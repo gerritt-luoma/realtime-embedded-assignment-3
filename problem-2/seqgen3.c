@@ -252,7 +252,7 @@ void Sequencer(int id)
     if((seqCnt % 2) == 0) sem_post(&semS1);
 
     // Service_2 = RT_MAX-2	@ 0.1 Hz
-    if((seqCnt % 5) == 0) sem_post(&semS2);
+    if((seqCnt % 20) == 0) sem_post(&semS2);
 
     seqCnt++;
 
