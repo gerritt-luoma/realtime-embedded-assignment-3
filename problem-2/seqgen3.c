@@ -30,6 +30,7 @@
 #include <errno.h>
 
 #include <signal.h>
+#include <math.h>
 
 #define USEC_PER_MSEC (1000)
 #define NANOSEC_PER_MSEC (1000000)
@@ -69,6 +70,14 @@ typedef struct
     int threadIdx;
 } threadParams_t;
 
+typedef struct {
+    double lat, lon, alt;
+    double roll, pitch, yaw;
+    struct timespec sample_time;
+} nav_state_t;
+
+nav_state_t shared_state;
+pthread_mutex_t shared_state_mutex;
 
 void Sequencer(int id);
 
@@ -234,8 +243,6 @@ void main(void)
    printf("\nTEST COMPLETE\n");
 }
 
-
-
 void Sequencer(int id)
 {
     struct timespec current_time_val;
@@ -287,16 +294,40 @@ void *Service_1(void *threadp)
 
     while(!abortS1) // check for synchronous abort request
     {
-	// wait for service request from the sequencer, a signal handler or ISR in kernel
+	    // wait for service request from the sequencer, a signal handler or ISR in kernel
         sem_wait(&semS1);
 
         S1Cnt++;
 
-	// DO WORK
+        nav_state_t new_state;
+        new_state.lat = 50.0 + (1.0 * S1Cnt);
+        new_state.lon = -40.0 - (2.0 * S1Cnt);
+        new_state.alt = 150.0 - (0.05 * S1Cnt);
 
-	// on order of up to milliseconds of latency to get time
+        new_state.roll = sin((double)S1Cnt);
+        new_state.pitch = cos((double)S1Cnt * (double)S1Cnt);
+        new_state.yaw = cos((double)S1Cnt);
+
         clock_gettime(MY_CLOCK_TYPE, &current_time_val); current_realtime=realtime(&current_time_val);
-        syslog(LOG_CRIT, "S1 1 Hz on core %d for release %llu @ sec=%6.9lf\n", sched_getcpu(), S1Cnt, current_realtime-start_realtime);
+        new_state.sample_time = current_realtime;
+
+        pthread_mutex_lock(&shared_state_mutex);
+        shared_state = new_state;
+	    // Shouldn't do additional proc like logging in mutex lock but keep locked to print current vals
+        syslog(LOG_CRIT,
+               "S1 1 Hz on core %d for release %llu: lat=%6.5lf, lon=%6.5lf, alt=%6.5lf, roll=%6.5lf, pitch=%6.5lf, yaw=%6.5lf @ sec=%6.9lf\n",
+               sched_getcpu(),
+               S1Cnt,
+               shared_state.lat,
+               shared_state.lon,
+               shared_state.alt,
+               shared_state.roll,
+               shared_state.pitch,
+               shared_state.yaw,
+               shared_state.sample_time,
+        );
+        pthread_mutex_unlock(&shared_state_mutex);
+
     }
 
     // Resource shutdown here
@@ -321,8 +352,21 @@ void *Service_2(void *threadp)
         sem_wait(&semS2);
         S2Cnt++;
 
-        clock_gettime(MY_CLOCK_TYPE, &current_time_val); current_realtime=realtime(&current_time_val);
-        syslog(LOG_CRIT, "S2 .1 Hz on core %d for release %llu @ sec=%6.9lf\n", sched_getcpu(), S2Cnt, current_realtime-start_realtime);
+        pthread_mutex_lock(&shared_state_mutex);
+	    // Shouldn't do additional proc like logging in mutex lock but keep locked to print current vals
+        syslog(LOG_CRIT,
+               "S2 0.1 Hz on core %d for release %llu: lat=%6.5lf, lon=%6.5lf, alt=%6.5lf, roll=%6.5lf, pitch=%6.5lf, yaw=%6.5lf @ sec=%6.9lf\n",
+               sched_getcpu(),
+               S1Cnt,
+               shared_state.lat,
+               shared_state.lon,
+               shared_state.alt,
+               shared_state.roll,
+               shared_state.pitch,
+               shared_state.yaw,
+               shared_state.sample_time,
+        );
+        pthread_mutex_unlock(&shared_state_mutex);
     }
 
     pthread_exit((void *)0);
