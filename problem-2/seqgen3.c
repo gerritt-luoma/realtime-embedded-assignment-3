@@ -73,7 +73,7 @@ typedef struct
 typedef struct {
     double lat, lon, alt;
     double roll, pitch, yaw;
-    struct timespec sample_time;
+    double sample_time;
 } nav_state_t;
 
 nav_state_t shared_state;
@@ -324,7 +324,7 @@ void *Service_1(void *threadp)
                shared_state.roll,
                shared_state.pitch,
                shared_state.yaw,
-               shared_state.sample_time,
+               shared_state.sample_time
         );
         pthread_mutex_unlock(&shared_state_mutex);
 
@@ -357,14 +357,14 @@ void *Service_2(void *threadp)
         syslog(LOG_CRIT,
                "S2 0.1 Hz on core %d for release %llu: lat=%6.5lf, lon=%6.5lf, alt=%6.5lf, roll=%6.5lf, pitch=%6.5lf, yaw=%6.5lf @ sec=%6.9lf\n",
                sched_getcpu(),
-               S1Cnt,
+               S2Cnt,
                shared_state.lat,
                shared_state.lon,
                shared_state.alt,
                shared_state.roll,
                shared_state.pitch,
                shared_state.yaw,
-               shared_state.sample_time,
+               shared_state.sample_time
         );
         pthread_mutex_unlock(&shared_state_mutex);
     }
