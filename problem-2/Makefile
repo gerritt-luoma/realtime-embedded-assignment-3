@@ -1,12 +1,12 @@
-INCLUDE_DIRS = 
-LIB_DIRS = 
+INCLUDE_DIRS =
+LIB_DIRS =
 CC=gcc
 
 CDEFS=
 CFLAGS= -O0 -g $(INCLUDE_DIRS) $(CDEFS)
-LIBS= 
+LIBS=
 
-HFILES= 
+HFILES=
 CFILES= seqgen3.c
 
 SRCS= ${HFILES} ${CFILES}
@@ -18,7 +18,7 @@ clean:
 	-rm -f seqgen3
 
 seqgen3: seqgen3.o
-	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o -lpthread -lrt
+	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o -lpthread -lrt -lm
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
