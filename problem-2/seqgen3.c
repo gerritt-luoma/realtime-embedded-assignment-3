@@ -248,10 +248,10 @@ void Sequencer(int id)
 
     // Release each service at a sub-rate of the generic sequencer rate
 
-    Servcie_1 = RT_MAX-1	@ 1 Hz
+    // Servcie_1 = RT_MAX-1	@ 1 Hz
     if((seqCnt % 2) == 0) sem_post(&semS1);
 
-    Service_2 = RT_MAX-2	@ 0.1 Hz
+    // Service_2 = RT_MAX-2	@ 0.1 Hz
     if((seqCnt % 5) == 0) sem_post(&semS2);
 
     seqCnt++;
