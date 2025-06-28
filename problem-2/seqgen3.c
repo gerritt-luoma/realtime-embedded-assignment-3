@@ -254,6 +254,7 @@ void Sequencer(int id)
     //syslog(LOG_CRIT, "Sequencer on core %d for cycle %llu @ sec=%6.9lf\n", sched_getcpu(), seqCnt, current_realtime-start_realtime);
 
     // Release each service at a sub-rate of the generic sequencer rate
+    seqCnt++;
 
     // Servcie_1 = RT_MAX-1	@ 1 Hz
     if((seqCnt % 2) == 0) sem_post(&semS1);
@@ -261,7 +262,6 @@ void Sequencer(int id)
     // Service_2 = RT_MAX-2	@ 0.1 Hz
     if((seqCnt % 20) == 0) sem_post(&semS2);
 
-    seqCnt++;
 
     if(abortTest || (seqCnt >= sequencePeriods))
     {
