@@ -315,7 +315,7 @@ void *Service_1(void *threadp)
         shared_state = new_state;
 	    // Shouldn't do additional proc like logging in mutex lock but keep locked to print current vals
         syslog(LOG_CRIT,
-               "S1 1 Hz on core %d for release %llu: lat=%6.5lf, lon=%6.5lf, alt=%6.5lf, roll=%6.5lf, pitch=%6.5lf, yaw=%6.5lf @ sec=%6.9lf\n",
+               "S1 1 Hz on core %d for release  %3llu: lat=%6.5lf, lon=%6.5lf, alt=%6.5lf, roll=%6.5lf, pitch=%6.5lf, yaw=%6.5lf @ sec=%6.9lf\n",
                sched_getcpu(),
                S1Cnt,
                shared_state.lat,
@@ -355,7 +355,7 @@ void *Service_2(void *threadp)
         pthread_mutex_lock(&shared_state_mutex);
 	    // Shouldn't do additional proc like logging in mutex lock but keep locked to print current vals
         syslog(LOG_CRIT,
-               "S2 0.1 Hz on core %d for release %llu: lat=%6.5lf, lon=%6.5lf, alt=%6.5lf, roll=%6.5lf, pitch=%6.5lf, yaw=%6.5lf @ sec=%6.9lf\n",
+               "S2 0.1 Hz on core %d for release %2llu: lat=%6.5lf, lon=%6.5lf, alt=%6.5lf, roll=%6.5lf, pitch=%6.5lf, yaw=%6.5lf @ sec=%6.9lf\n",
                sched_getcpu(),
                S2Cnt,
                shared_state.lat,
