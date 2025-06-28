@@ -85,9 +85,177 @@ void* average_thread_func(void* arg)
 }
 ```
 
-> C: Now, using a MUTEX, provide an example using RT-Linux Pthreads that does a threadsafe update of a complex state (3 or more numbers – e.g., Latitude, Longitude and Altitude of a location) with a timestamp (pthread_mutex_lock). Your code should include two threads and one should update a timespec structure contained in a structure that includes a double precision position and attitude state of {Lat, Long, Altitude and Roll, Pitch, Yaw at Sample_Time} and the other should read it and never disagree on the values as function of time. You can just make up values for the navigational state usin gmath library function generators (e.g., use simple periodic functions for Roll, Pitch, Yaws in(x), cos(x2), and cos(x), where x=time and linear functions for Lat, Long, Alt) and see http://linux.die.net/man/3/clock_gettime for how to add a precision timestamp. The second thread should read the times-stamped state without the possibility of data corruption (partial update of one of the 6 floating point values). There should be no disagreement between the functions and the state reader for any point in time. Run thisfor 180 seconds with a 1 Hz update rate and a 0.1 Hz read rate. Make sure the 18 values read are correct.
+> C: Now, using a MUTEX, provide an example using RT-Linux Pthreads that does a threadsafe update of a complex state (3 or more numbers – e.g., Latitude, Longitude and Altitude of a location) with a timestamp (pthread_mutex_lock). Your code should include two threads and one should update a timespec structure contained in a structure that includes a double precision position and attitude state of {Lat, Long, Altitude and Roll, Pitch, Yaw at Sample_Time} and the other should read it and never disagree on the values as function of time. You can just make up values for the navigational state usin gmath library function generators (e.g., use simple periodic functions for Roll, Pitch, Yaws in(x), cos(x2), and cos(x), where x=time and linear functions for Lat, Long, Alt) and see http://linux.die.net/man/3/clock_gettime for how to add a precision timestamp. The second thread should read the times-stamped state without the possibility of data corruption (partial update of one of the 6 floating point values). There should be no disagreement between the functions and the state reader for any point in time. Run this for 180 seconds with a 1 Hz update rate and a 0.1 Hz read rate. Make sure the 18 values read are correct.
 
-TODO:
+I have added my program fulfilling the requirements of this problem along with its output to the directory `problem-2/` of this repository.  I used Sam Siewert's provided `seqgen3.c` program as the base which can be found in the [RTES-ECEE-5623](https://github.com/siewertsmooc/RTES-ECEE-5623/blob/main/sequencer_generic/seqgen3.c) repository.  I have modified the program to only have the two required services, the writer and the reader, which are running at 1Hz and 0.1Hz respectively being released by a timer sequencer operating at 2Hz.  Instrucitons to run the program can be found below:
+
+```bash
+// First terminal in the problem-2 directory - builds and runs the program
+$ make clean
+$ make
+$ sudo ./seqgen3
+
+// Second terminal in any directory - outputs the syslogs of the program
+$ journalctl -f
+```
+
+I am using practically randomized data in the writer thread, Service_1, to "simulate" the Attitude and SCLK of a satellite.  If any satellite has the true ATD of this satellite, you will want to say goodbye to it because it is spinning like a top and dropping fast.  The logic of the writer thread running at 1Hz is found below:
+
+```c
+void *Service_1(void *threadp)
+{
+    struct timespec current_time_val;
+    double current_realtime;
+    unsigned long long S1Cnt=0;
+    threadParams_t *threadParams = (threadParams_t *)threadp;
+
+    // Start up processing and resource initialization
+    clock_gettime(MY_CLOCK_TYPE, &current_time_val); current_realtime=realtime(&current_time_val);
+    syslog(LOG_CRIT, "S1 thread @ sec=%6.9lf\n", current_realtime-start_realtime);
+    printf("S1 thread @ sec=%6.9lf\n", current_realtime-start_realtime);
+
+    while(!abortS1) // check for synchronous abort request
+    {
+	    // wait for service request from the sequencer, a signal handler or ISR in kernel
+        sem_wait(&semS1);
+
+        S1Cnt++;
+
+        nav_state_t new_state;
+        new_state.lat = 50.0 + (1.0 * S1Cnt);
+        new_state.lon = -40.0 - (2.0 * S1Cnt);
+        new_state.alt = 150.0 - (0.05 * S1Cnt);
+
+        new_state.roll = sin((double)S1Cnt);
+        new_state.pitch = cos((double)S1Cnt * (double)S1Cnt);
+        new_state.yaw = cos((double)S1Cnt);
+
+        clock_gettime(MY_CLOCK_TYPE, &current_time_val); current_realtime=realtime(&current_time_val);
+        new_state.sample_time = current_realtime;
+
+        pthread_mutex_lock(&shared_state_mutex);
+        shared_state = new_state;
+	    // Shouldn't do additional proc like logging in mutex lock but keep locked to print current vals
+        syslog(LOG_CRIT,
+               "S1 1 Hz on core %d for release  %3llu: lat=%6.5lf, lon=%6.5lf, alt=%6.5lf, roll=%6.5lf, pitch=%6.5lf, yaw=%6.5lf @ sec=%6.9lf\n",
+               sched_getcpu(),
+               S1Cnt,
+               shared_state.lat,
+               shared_state.lon,
+               shared_state.alt,
+               shared_state.roll,
+               shared_state.pitch,
+               shared_state.yaw,
+               shared_state.sample_time
+        );
+        pthread_mutex_unlock(&shared_state_mutex);
+
+    }
+
+    // Resource shutdown here
+    //
+    pthread_exit((void *)0);
+}
+```
+
+The second thread, Service_2, runs at 0.1Hz simply reading the shared state and printing it to the syslogs.  Its code is found below:
+
+```c
+void *Service_2(void *threadp)
+{
+    struct timespec current_time_val;
+    double current_realtime;
+    unsigned long long S2Cnt=0;
+    threadParams_t *threadParams = (threadParams_t *)threadp;
+
+    clock_gettime(MY_CLOCK_TYPE, &current_time_val); current_realtime=realtime(&current_time_val);
+    syslog(LOG_CRIT, "S2 thread @ sec=%6.9lf\n", current_realtime-start_realtime);
+    printf("S2 thread @ sec=%6.9lf\n", current_realtime-start_realtime);
+
+    while(!abortS2)
+    {
+        sem_wait(&semS2);
+        S2Cnt++;
+
+        pthread_mutex_lock(&shared_state_mutex);
+	    // Shouldn't do additional proc like logging in mutex lock but keep locked to print current vals
+        syslog(LOG_CRIT,
+               "S2 0.1 Hz on core %d for release %2llu: lat=%6.5lf, lon=%6.5lf, alt=%6.5lf, roll=%6.5lf, pitch=%6.5lf, yaw=%6.5lf @ sec=%6.9lf\n",
+               sched_getcpu(),
+               S2Cnt,
+               shared_state.lat,
+               shared_state.lon,
+               shared_state.alt,
+               shared_state.roll,
+               shared_state.pitch,
+               shared_state.yaw,
+               shared_state.sample_time
+        );
+        pthread_mutex_unlock(&shared_state_mutex);
+    }
+
+    pthread_exit((void *)0);
+}
+```
+
+As mentioned before, the full output of the program can be found in the `problem-2` directory but the main task of this problem was to ensure the mutex synchronization was preventing any data corruption for all 18 times both of the threads access the shared state.  After analyzing the logs, I can confirm that all 18 occurrences result in no data corruption.  The writer thread, having the higher priority, first updates the state and then the reader thread outputs it.  The output of all 18 of these occurrences can be found below:
+
+```bash
+Jun 28 09:24:20 arthur seqgen3[31547]: S1 1 Hz on core 2 for release   10: lat=60.00000, lon=-60.00000, alt=149.50000, roll=-0.54402, pitch=0.86232, yaw=-0.83907 @ sec=1728732.540957039
+Jun 28 09:24:20 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release  1: lat=60.00000, lon=-60.00000, alt=149.50000, roll=-0.54402, pitch=0.86232, yaw=-0.83907 @ sec=1728732.540957039
+
+Jun 28 09:24:30 arthur seqgen3[31547]: S1 1 Hz on core 2 for release   20: lat=70.00000, lon=-80.00000, alt=149.00000, roll=0.91295, pitch=-0.52530, yaw=0.40808 @ sec=1728742.541062533
+Jun 28 09:24:30 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release  2: lat=70.00000, lon=-80.00000, alt=149.00000, roll=0.91295, pitch=-0.52530, yaw=0.40808 @ sec=1728742.541062533
+
+Jun 28 09:24:40 arthur seqgen3[31547]: S1 1 Hz on core 2 for release   30: lat=80.00000, lon=-100.00000, alt=148.50000, roll=-0.98803, pitch=0.06625, yaw=0.15425 @ sec=1728752.541168657
+Jun 28 09:24:40 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release  3: lat=80.00000, lon=-100.00000, alt=148.50000, roll=-0.98803, pitch=0.06625, yaw=0.15425 @ sec=1728752.541168657
+
+Jun 28 09:24:50 arthur seqgen3[31547]: S1 1 Hz on core 2 for release   40: lat=90.00000, lon=-120.00000, alt=148.00000, roll=0.74511, pitch=-0.59836, yaw=-0.66694 @ sec=1728762.541265651
+Jun 28 09:24:50 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release  4: lat=90.00000, lon=-120.00000, alt=148.00000, roll=0.74511, pitch=-0.59836, yaw=-0.66694 @ sec=1728762.541265651
+
+Jun 28 09:25:00 arthur seqgen3[31547]: S1 1 Hz on core 2 for release   50: lat=100.00000, lon=-140.00000, alt=147.50000, roll=-0.26237, pitch=0.75983, yaw=0.96497 @ sec=1728772.541368367
+Jun 28 09:25:00 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release  5: lat=100.00000, lon=-140.00000, alt=147.50000, roll=-0.26237, pitch=0.75983, yaw=0.96497 @ sec=1728772.541368367
+
+Jun 28 09:25:10 arthur seqgen3[31547]: S1 1 Hz on core 2 for release   60: lat=110.00000, lon=-160.00000, alt=147.00000, roll=-0.30481, pitch=0.96505, yaw=-0.95241 @ sec=1728782.541465065
+Jun 28 09:25:10 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release  6: lat=110.00000, lon=-160.00000, alt=147.00000, roll=-0.30481, pitch=0.96505, yaw=-0.95241 @ sec=1728782.541465065
+
+Jun 28 09:25:20 arthur seqgen3[31547]: S1 1 Hz on core 2 for release   70: lat=120.00000, lon=-180.00000, alt=146.50000, roll=0.77389, pitch=0.63365, yaw=0.63332 @ sec=1728792.541573429
+Jun 28 09:25:20 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release  7: lat=120.00000, lon=-180.00000, alt=146.50000, roll=0.77389, pitch=0.63365, yaw=0.63332 @ sec=1728792.541573429
+
+Jun 28 09:25:30 arthur seqgen3[31547]: S1 1 Hz on core 2 for release   80: lat=130.00000, lon=-200.00000, alt=146.00000, roll=-0.99389, pitch=-0.83878, yaw=-0.11039 @ sec=1728802.541682201
+Jun 28 09:25:30 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release  8: lat=130.00000, lon=-200.00000, alt=146.00000, roll=-0.99389, pitch=-0.83878, yaw=-0.11039 @ sec=1728802.541682201
+
+Jun 28 09:25:40 arthur seqgen3[31547]: S1 1 Hz on core 2 for release   90: lat=140.00000, lon=-220.00000, alt=145.50000, roll=0.89400, pitch=0.56188, yaw=-0.44807 @ sec=1728812.541776806
+Jun 28 09:25:40 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release  9: lat=140.00000, lon=-220.00000, alt=145.50000, roll=0.89400, pitch=0.56188, yaw=-0.44807 @ sec=1728812.541776806
+
+Jun 28 09:25:50 arthur seqgen3[31547]: S1 1 Hz on core 2 for release  100: lat=150.00000, lon=-240.00000, alt=145.00000, roll=-0.50637, pitch=-0.95216, yaw=0.86232 @ sec=1728822.541879652
+Jun 28 09:25:50 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 10: lat=150.00000, lon=-240.00000, alt=145.00000, roll=-0.50637, pitch=-0.95216, yaw=0.86232 @ sec=1728822.541879652
+
+Jun 28 09:26:00 arthur seqgen3[31547]: S1 1 Hz on core 2 for release  110: lat=160.00000, lon=-260.00000, alt=144.50000, roll=-0.04424, pitch=0.15526, yaw=-0.99902 @ sec=1728832.541985998
+Jun 28 09:26:00 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 11: lat=160.00000, lon=-260.00000, alt=144.50000, roll=-0.04424, pitch=0.15526, yaw=-0.99902 @ sec=1728832.541985998
+
+Jun 28 09:26:10 arthur seqgen3[31547]: S1 1 Hz on core 2 for release  120: lat=170.00000, lon=-280.00000, alt=144.00000, roll=0.58061, pitch=0.48824, yaw=0.81418 @ sec=1728842.542088511
+Jun 28 09:26:10 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 12: lat=170.00000, lon=-280.00000, alt=144.00000, roll=0.58061, pitch=0.48824, yaw=0.81418 @ sec=1728842.542088511
+
+Jun 28 09:26:20 arthur seqgen3[31547]: S1 1 Hz on core 2 for release  130: lat=180.00000, lon=-300.00000, alt=143.50000, roll=-0.93011, pitch=-0.19640, yaw=-0.36729 @ sec=1728852.542189560
+Jun 28 09:26:20 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 13: lat=180.00000, lon=-300.00000, alt=143.50000, roll=-0.93011, pitch=-0.19640, yaw=-0.36729 @ sec=1728852.542189560
+
+Jun 28 09:26:30 arthur seqgen3[31547]: S1 1 Hz on core 2 for release  140: lat=190.00000, lon=-320.00000, alt=143.00000, roll=0.98024, pitch=-0.92239, yaw=-0.19781 @ sec=1728862.542293554
+Jun 28 09:26:30 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 14: lat=190.00000, lon=-320.00000, alt=143.00000, roll=0.98024, pitch=-0.92239, yaw=-0.19781 @ sec=1728862.542293554
+
+Jun 28 09:26:40 arthur seqgen3[31547]: S1 1 Hz on core 2 for release  150: lat=200.00000, lon=-340.00000, alt=142.50000, roll=-0.71488, pitch=0.99625, yaw=0.69925 @ sec=1728872.542394289
+Jun 28 09:26:40 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 15: lat=200.00000, lon=-340.00000, alt=142.50000, roll=-0.71488, pitch=0.99625, yaw=0.69925 @ sec=1728872.542394289
+
+Jun 28 09:26:50 arthur seqgen3[31547]: S1 1 Hz on core 2 for release  160: lat=210.00000, lon=-360.00000, alt=142.00000, roll=0.21943, pitch=-0.66855, yaw=-0.97563 @ sec=1728882.542497764
+Jun 28 09:26:50 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 16: lat=210.00000, lon=-360.00000, alt=142.00000, roll=0.21943, pitch=-0.66855, yaw=-0.97563 @ sec=1728882.542497764
+
+Jun 28 09:27:00 arthur seqgen3[31547]: S1 1 Hz on core 2 for release  170: lat=220.00000, lon=-380.00000, alt=141.50000, roll=0.34665, pitch=-0.88272, yaw=0.93799 @ sec=1728892.542616666
+Jun 28 09:27:00 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 17: lat=220.00000, lon=-380.00000, alt=141.50000, roll=0.34665, pitch=-0.88272, yaw=0.93799 @ sec=1728892.542616666
+
+Jun 28 09:27:10 arthur seqgen3[31547]: S1 1 Hz on core 2 for release  180: lat=230.00000, lon=-400.00000, alt=141.00000, roll=-0.80115, pitch=-0.72830, yaw=-0.59846 @ sec=1728902.542711160
+Jun 28 09:27:10 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 18: lat=230.00000, lon=-400.00000, alt=141.00000, roll=-0.80115, pitch=-0.72830, yaw=-0.59846 @ sec=1728902.542711160
+
+```
 
 ## Exercise 3
 

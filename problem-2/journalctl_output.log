@@ -1,13 +1,3 @@
-Jun 28 09:23:20 arthur seqgen3[31521]: S2 0.1 Hz on core 2 for release  5: lat=100.00000, lon=-140.00000, alt=147.50000, roll=-0.26237, pitch=0.75983, yaw=0.96497 @ sec=1728672.291076668
-Jun 28 09:23:21 arthur seqgen3[31521]: S1 1 Hz on core 2 for release   51: lat=101.00000, lon=-142.00000, alt=147.45000, roll=0.67023, pitch=0.97164, yaw=0.74215 @ sec=1728673.291081241
-Jun 28 09:23:22 arthur seqgen3[31521]: S1 1 Hz on core 2 for release   52: lat=102.00000, lon=-144.00000, alt=147.40000, roll=0.98663, pitch=-0.61274, yaw=-0.16299 @ sec=1728674.291100166
-Jun 28 09:23:23 arthur seqgen3[31521]: S1 1 Hz on core 2 for release   53: lat=103.00000, lon=-146.00000, alt=147.35000, roll=0.39593, pitch=0.91464, yaw=-0.91828 @ sec=1728675.291108258
-Jun 28 09:23:24 arthur seqgen3[31521]: S1 1 Hz on core 2 for release   54: lat=104.00000, lon=-148.00000, alt=147.30000, roll=-0.55879, pitch=0.82419, yaw=-0.82931 @ sec=1728676.291118036
-Jun 28 09:23:25 arthur seqgen3[31521]: S1 1 Hz on core 2 for release   55: lat=105.00000, lon=-150.00000, alt=147.25000, roll=-0.99976, pitch=-0.93809, yaw=0.02213 @ sec=1728677.291132146
-Jun 28 09:23:26 arthur seqgen3[31521]: S1 1 Hz on core 2 for release   56: lat=106.00000, lon=-152.00000, alt=147.20000, roll=-0.52155, pitch=0.77091, yaw=0.85322 @ sec=1728678.291138405
-Jun 28 09:23:27 arthur seqgen3[31521]: S1 1 Hz on core 2 for release   57: lat=107.00000, lon=-154.00000, alt=147.15000, roll=0.43616, pitch=0.82916, yaw=0.89987 @ sec=1728679.291148589
-Jun 28 09:23:28 arthur seqgen3[31521]: S1 1 Hz on core 2 for release   58: lat=108.00000, lon=-156.00000, alt=147.10000, roll=0.99287, pitch=-0.79866, yaw=0.11918 @ sec=1728680.291160052
-Jun 28 09:23:29 arthur sudo[31519]: pam_unix(sudo:session): session closed for user root
 Jun 28 09:24:10 arthur sudo[31545]:  gerritt : TTY=pts/0 ; PWD=/home/gerritt/repos/realtime-embedded-assignment-3/problem-2 ; USER=root ; COMMAND=./seqgen3
 Jun 28 09:24:10 arthur sudo[31545]: pam_unix(sudo:session): session opened for user root(uid=0) by gerritt(uid=1000)
 Jun 28 09:24:10 arthur seqgen3[31547]: START Low Rate Sequencer @ sec=0.000000167 with resolution 0.000000001
