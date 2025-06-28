@@ -254,16 +254,185 @@ Jun 28 09:27:00 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 17: lat=2
 
 Jun 28 09:27:10 arthur seqgen3[31547]: S1 1 Hz on core 2 for release  180: lat=230.00000, lon=-400.00000, alt=141.00000, roll=-0.80115, pitch=-0.72830, yaw=-0.59846 @ sec=1728902.542711160
 Jun 28 09:27:10 arthur seqgen3[31547]: S2 0.1 Hz on core 2 for release 18: lat=230.00000, lon=-400.00000, alt=141.00000, roll=-0.80115, pitch=-0.72830, yaw=-0.59846 @ sec=1728902.542711160
-
 ```
 
 ## Exercise 3
 
 > Download example-sync-updated-2/ and review, build and run it.
 
+`deadlock.c` is a program that will intentionally create a deadlock.  It does so by creating two threads, thread 1 and thread 2, and two mutexes, A and B.  Thread 1 starts and grabs Mutex A before sleeping for 1 second.  At the same time, thread 2 grabs mutex B and sleeps for 1 second.  After their sleeps each thread attempts to grab the mutex held by the other thread before releasing the mutex of their own.  This causes a deadlock scenario where the program is unable to progress.  The output of `deadlock.c` is seen below:
+```bash
+$ sudo ./deadlock
+Will set up unsafe deadlock scenario
+Creating thread 0
+Thread 1 spawned
+Creating thread 1
+THREAD 1 grabbing resources
+Thread 2 spawned
+rsrcACnt=1, rsrcBCnt=0
+will try to join CS threads unless they deadlock
+THREAD 2 grabbing resources
+THREAD 1 got A, trying for B
+THREAD 2 got B, trying for A
+// Never proceeds past here
+```
+
+`deadlock_timeout.c` is a program that performs a very similar operation to `deadlock.c` in that it intentionally creates a deadlock scenario.  The difference, however, is that in `deadlock_timeout.c` the second mutext is acquired using `pthread_mutex_timedlock` with a timeout of 2 seconds.  When the deadlock occurs, one of the threads eventually errors out on the mutext acquisition and gives up its own resource.  This allows the other thread to acquire its second resource declaring success.  This can be seen below:
+
+```bash
+$ sudo ./deadlock_timeout
+Will set up unsafe deadlock scenario
+Creating thread 0
+Creating thread 1
+Thread 1 started
+THREAD 1 grabbing resource A @ 1751143126 sec and 238666354 nsec
+Thread 1 GOT A
+rsrcACnt=1, rsrcBCnt=0
+will sleep
+will try to join both CS threads unless they deadlock
+Thread 2 started
+THREAD 2 grabbing resource B @ 1751143126 sec and 238892666 nsec
+Thread 2 GOT B
+rsrcACnt=1, rsrcBCnt=1
+will sleep
+THREAD 1 got A, trying for B @ 1751143127 sec and 238830363 nsec
+THREAD 2 got B, trying for A @ 1751143127 sec and 239147675 nsec
+Thread 2 TIMEOUT ERROR
+Thread 1 GOT B @ 1751143129 sec and 240233700 nsec with rc=0
+rsrcACnt=1, rsrcBCnt=1
+THREAD 1 got A and B
+THREAD 1 done
+Thread 1 joined to main
+Thread 2 joined to main
+All done
+```
+
+`pthread3.c` is a program that intentionally creates an unbounded priority inversion situation.  It does so by creating 3 threads, one high priority, one low priority, and one medium priority.  The low priority thread is started first which acquires a shared memory mutex before starting a long running computation.  The high rate thread is then started which preempts the low priority task until it attempts to acquire the mutex which it cannot do since the low priority task already has it locked.  A medium priority task is then spawned which once again preempts the low priority task.  This medium priority task also performs a long running computation which prevents the low priority task from releasing the shared resource.  Once it completes the low priority task can complete unlocking the mutex which allows the high priority task to finish which then allows the program as a whole to complete.  This can be seen below:
+
+```bash
+$ sudo ./pthread3
+Fibonacci Cycle Burner test ...
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 28657 46368 75025 121393 196418 317811 514229 832040 1346269 2178309 3524578 5702887 9227465 14930352 24157817 39088169 63245986 102334155 165580141 267914296 433494437 701408733 1134903170 1836311903 2971215073 512559680 
+
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 28657 46368 75025 121393 196418 317811 514229 832040 1346269 2178309 3524578 5702887 9227465 14930352 24157817 39088169 63245986 102334155 165580141 267914296 433494437 701408733 1134903170 1836311903 2971215073 512559680 
+done
+interference time = 10 secs
+unsafe mutex will be created
+Pthread Policy is SCHED_OTHER
+Setting thread 0 to core 0
+
+Launching thread 0
+min prio = 1, max prio = 99
+PTHREAD SCOPE SYSTEM
+
+Creating RT thread 0
+Start services thread spawned
+will join service threads
+
+Creating Low Prio RT or BE thread 3
+Low prio 3 thread SPAWNED at 0.000331 sec
+.......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+CS-L REQUEST
+
+CS-L ENTRY 1
+CS-L1 CS-L2 CScnt=1
+
+Creating RT thread 1, CScnt=1
+
+CS-H REQUEST
+High prio 1 thread SPAWNED at 0.199399 sec
+
+Creating RT thread 2
+M1 M2 M3 M4 M5 M6 M7 M8 M9 M10 
+**** MID PRIO 2 on core 0 INTERFERE NO SEM COMPLETED at 0.539686 sec
+Middle prio 2 thread SPAWNED at 0.540104 sec
+CS-L3 CS-L4 CS-L5 CS-L6 CS-L7 CS-L8 CS-L9 CS-L10 
+CS-L LEAVING
+
+CS-H ENTRY 2
+CS-H1 CS-H2 CS-H3 CS-H4 CS-H5 CS-H6 CS-H7 CS-H8 CS-H9 CS-H10 
+CS-H LEAVING
+
+CS-H EXIT
+
+**** HIGH PRIO 1 on core 0 CRIT SECTION WORK COMPLETED at 1.124067 sec
+
+CS-L EXIT
+
+**** LOW PRIO 3 on core 0 CRIT SECTION WORK COMPLETED at 1.124238 sec
+HIGH PRIO joined
+MID PRIO joined
+LOW PRIO joined
+START SERVICE joined
+All threads done
+```
+
+I am unable to run `pthread3amp.c` because it causes my SSH window to crash.  The SA has also confirmed this issue with the code.
+
+`pthread3ok.c` provides an example fix to the unbounded priority inversion found in `pthread3.c`.  It does so by not using a mutex to synchromize the work between the thread.  This is not a practical fix because it can lead to data races and undefined behavior.  The output can be seen below:
+
+```bash
+$ sudo ./pthread3ok
+Fibonacci Cycle Burner test ...
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 28657 46368 75025 121393 196418 317811 514229 832040 1346269 2178309 3524578 5702887 9227465 14930352 24157817 39088169 63245986 102334155 165580141 267914296 433494437 701408733 1134903170 1836311903 2971215073 512559680 
+
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 28657 46368 75025 121393 196418 317811 514229 832040 1346269 2178309 3524578 5702887 9227465 14930352 24157817 39088169 63245986 102334155 165580141 267914296 433494437 701408733 1134903170 1836311903 2971215073 512559680 
+done
+interference time = 10 secs
+unsafe mutex will be created
+Pthread Policy is SCHED_OTHER
+Setting thread 0 to core 0
+
+Launching thread 0
+min prio = 1, max prio = 99
+PTHREAD SCOPE SYSTEM
+
+Creating RT thread 0
+Start services thread spawned
+will join service threads
+
+Creating BE thread 3
+Low prio 3 thread SPAWNED at 0.000421 sec
+......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+CS-L REQUEST
+
+CS-L ENTRY 1
+CS-L1 CS-L2 
+Creating RT thread 1, CScnt=1
+
+CS-H REQUEST
+
+CS-H ENTRY 2
+CS-H1 CS-H2 CS-H3 CS-H4 CS-H5 CS-H6 CS-H7 CS-H8 CS-H9 CS-H10 
+CS-H LEAVING
+
+CS-H EXIT
+
+**** HIGH PRIO 1 on core 0 UNPROTECTED CRIT SECTION WORK COMPLETED at 0.536935 sec
+High prio 1 thread SPAWNED at 0.537398 sec
+
+Creating RT thread 2
+M1 M2 M3 M4 M5 M6 M7 M8 M9 M10 
+**** MID PRIO 2 on core 0 INTERFERE NO SEM COMPLETED at 0.877677 sec
+Middle prio 2 thread SPAWNED at 0.877747 sec
+HIGH PRIO joined
+MID PRIO joined
+CS-L3 CS-L4 CS-L5 CS-L6 CS-L7 CS-L8 CS-L9 CS-L10 
+CS-L LEAVING
+
+CS-L EXIT
+
+**** LOW PRIO 3 on core 0 UNPROTECTED CRIT SECTION WORK COMPLETED at 1.136382 sec
+LOW PRIO joined
+START SERVICE joined
+All threads done
+```
+
 > A: Describe both the issues of deadlock and unbounded priority inversion and the root cause for both in the example code.
 
-TODO:
+`deadlock.c` demonstrates a deadlock scenario where two threads try to take shared reasources in a way that the threads can never progress.  It does so by creating two threads, thread 1 and thread 2, and two mutexes, A and B.  Thread 1 starts and grabs Mutex A before sleeping for 1 second.  At the same time, thread 2 grabs mutex B and sleeps for 1 second.  After their sleeps each thread attempts to grab the mutex held by the other thread before releasing the mutex of their own.  This causes a deadlock scenario where the program is unable to progress.
+
+`pthread3.c` demonstrates an unbounded priority inversion situation. It does so by creating 3 threads, one high priority, one low priority, and one medium priority.  The low priority thread is started first which acquires a shared memory mutex before starting a long running computation.  The high rate thread is then started which preempts the low priority task until it attempts to acquire the mutex which it cannot do since the low priority task already has it locked.  A medium priority task is then spawned which once again preempts the low priority task.  This medium priority task also performs a long running computation which prevents the low priority task from releasing the shared resource.  Once it completes the low priority task can complete unlocking the mutex which allows the high priority task to finish which then allows the program as a whole to complete.
 
 > B: Fix the deadlock so that it does not occur by using a random back-off scheme to resolve. For the unbounded inversion, is there a real fix in Linux – if not, why not?
 
