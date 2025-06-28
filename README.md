@@ -436,7 +436,34 @@ All threads done
 
 > B: Fix the deadlock so that it does not occur by using a random back-off scheme to resolve. For the unbounded inversion, is there a real fix in Linux – if not, why not?
 
-TODO:
+I have added a new C source file at `problem-3/example-sync-updated-2/deadlock-backoff.c` which uses a random backoff technique to address any possible form of deadlock.  On each thread it will acquire its original mutex, for thread 1 it is A, and then it will attempt to acquire its second mutex using `pthread_mutex_trylock()`.  If it fails, it will log an error, release its original mutex, and sleep for a random amount of time between 1 and 10ms.  This code example consistently sees thread 1 backing off allowing thread 2 to finish before it loops back and finishes up itself.  Its output is seen below here:
+
+```bash
+$ sudo ./deadlock-backoff
+Will set up unsafe deadlock scenario
+Creating thread 0
+Thread 1 spawned
+Creating thread 1
+THREAD 1 grabbing resources
+Thread 2 spawned
+rsrcACnt=1, rsrcBCnt=0
+will try to join CS threads unless they deadlock
+THREAD 2 grabbing resources
+THREAD 1 got A, trying for B
+THREAD 1 failed to get B, backing off
+THREAD 2 got B, trying for A
+THREAD 2 got A and B
+THREAD 2 done
+THREAD 1 grabbing resources
+THREAD 1 got A, trying for B
+THREAD 1 got A and B
+THREAD 1 done
+Thread 1: 8ac5f180 done
+Thread 2: 8a44f180 done
+All done
+```
+
+
 
 > C: What about a patch for the Linux kernel? For example, Linux Kernel.org recommends the RT_PREEMPT Patch, also discussed by the Linux Foundation Realtime Start and this blog, but would this really help?
 

@@ -44,7 +44,7 @@ typedef struct
 
 threadParams_t threadParams[NUM_THREADS];
 
-pthread_mutex_t sharedMemSem;
+pthread_mutex_t sharedMemSem = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutexattr_t rt_safe;
 
 int rt_protocol;
