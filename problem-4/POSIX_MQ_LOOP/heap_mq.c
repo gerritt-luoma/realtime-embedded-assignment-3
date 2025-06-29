@@ -38,11 +38,11 @@ void *receiver(void *arg)
   char buffer[MAX_MSG_SIZE];
   int prio;
   int rc;
- 
+
    printf("receiver - thread entry\n");
 
-  mymq = mq_open(SNDRCV_MQ, O_CREAT|O_RDWR, S_IRWXU, &mq_attr);  
-  
+  mymq = mq_open(SNDRCV_MQ, O_CREAT|O_RDWR, S_IRWXU, &mq_attr);
+
 
     /* read oldest, highest priority msg from the message queue until empty */
     do
@@ -55,13 +55,13 @@ void *receiver(void *arg)
         }
         else
         {
-          buffer[MAX_MSG_SIZE] = '\0';
+          buffer[MAX_MSG_SIZE - 1] = '\0';
           printf("receive: msg %s received with priority = %d, rc = %d\n", buffer, prio, rc);
         }
 #endif
 
     } while(rc != ERROR);
-    
+
 }
 
 
@@ -92,7 +92,7 @@ void *sender(void *arg)
 #endif
 
     } while(rc != ERROR);
-  
+
 }
 
 
@@ -114,32 +114,32 @@ void main(void)
   // Create two communicating processes right here
   //receiver((void *)0);
   //sender((void *)0);
-  
-  //exit(0); 
-  
+
+  //exit(0);
+
   //creating prioritized thread
-  
+
   //initialize  with default atrribute
   rc = pthread_attr_init(&attr_receive);
   //specific scheduling for Receiving
   rc = pthread_attr_setinheritsched(&attr_receive, PTHREAD_EXPLICIT_SCHED);
-  rc = pthread_attr_setschedpolicy(&attr_receive, SCHED_FIFO); 
+  rc = pthread_attr_setschedpolicy(&attr_receive, SCHED_FIFO);
   param_receive.sched_priority = rt_min_prio;
   pthread_attr_setschedparam(&attr_receive, &param_receive);
-  
+
   //initialize  with default atrribute
   rc = pthread_attr_init(&attr_send);
   //specific scheduling for Receiving
   rc = pthread_attr_setinheritsched(&attr_send, PTHREAD_EXPLICIT_SCHED);
-  rc = pthread_attr_setschedpolicy(&attr_send, SCHED_FIFO); 
+  rc = pthread_attr_setschedpolicy(&attr_send, SCHED_FIFO);
   param_send.sched_priority = rt_max_prio;
   pthread_attr_setschedparam(&attr_send, &param_send);
-  
+
   if((rc=pthread_create(&th_send, &attr_send, sender, NULL)) == 0)
   {
     printf("\n\rSender Thread Created with rc=%d\n\r", rc);
   }
-  else 
+  else
   {
     perror("\n\rFailed to Make Sender Thread\n\r");
     printf("rc=%d\n", rc);
@@ -151,13 +151,13 @@ void main(void)
   }
   else
   {
-    perror("\n\r Failed Making Reciever Thread\n\r"); 
+    perror("\n\r Failed Making Reciever Thread\n\r");
     printf("rc=%d\n", rc);
   }
 
-  printf("pthread join send\n");  
+  printf("pthread join send\n");
   pthread_join(th_send, NULL);
 
-  printf("pthread join receive\n");  
+  printf("pthread join receive\n");
   pthread_join(th_receive, NULL);
 }
