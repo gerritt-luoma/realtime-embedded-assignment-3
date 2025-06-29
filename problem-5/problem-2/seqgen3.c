@@ -397,7 +397,7 @@ void *Service_3(void *threadp)
         clock_gettime(MY_CLOCK_TYPE, &timeout);
         timeout.tv_sec += 10; // wait up to 10 seconds
 
-        rc = pthread_mutex_timedlock(&shared_state_mutex, &timeout);
+        rc = pthread_mutex_timedlock(&service_3_mutex, &timeout);
         if (rc == ETIMEDOUT)
         {
             printf("No new data\n");
@@ -405,10 +405,8 @@ void *Service_3(void *threadp)
         else if (rc == 0)
         {
             // Accessed shared state successfully, immediately unlock
-            pthread_mutex_unlock(&shared_state_mutex);
+            pthread_mutex_unlock(&service_3_mutex);
         }
-
-        sleep(1); // prevent busy-looping
     }
 
     pthread_exit(NULL);
