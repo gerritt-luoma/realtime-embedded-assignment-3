@@ -391,6 +391,8 @@ void *Service_3(void *threadp)
 {
     struct timespec timeout;
     int rc;
+    double current_realtime = 0;
+    struct timespec current_time_val;
 
     while (!abortTest)
     {
@@ -400,7 +402,8 @@ void *Service_3(void *threadp)
         rc = pthread_mutex_timedlock(&service_3_mutex, &timeout);
         if (rc == ETIMEDOUT)
         {
-            printf("No new data\n");
+            clock_gettime(MY_CLOCK_TYPE, &current_time_val); current_realtime=realtime(&current_time_val);
+            syslog(LOG_CRIT, "No new data available at %6.9lf\n", current_realtime);
         }
         else if (rc == 0)
         {
