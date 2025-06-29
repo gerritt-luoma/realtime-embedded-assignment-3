@@ -394,7 +394,7 @@ void *Service_3(void *threadp)
 
     while (!abortTest)
     {
-        clock_gettime(MY_CLOCK_TYPE, &timeout);
+        clock_gettime(CLOCK_REALTIME, &timeout);
         timeout.tv_sec += 10; // wait up to 10 seconds
 
         rc = pthread_mutex_timedlock(&service_3_mutex, &timeout);
