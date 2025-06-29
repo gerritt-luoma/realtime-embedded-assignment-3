@@ -53,7 +53,7 @@
 //#define MY_CLOCK_TYPE CLOCK_MONTONIC_COARSE
 
 int abortTest=FALSE;
-int abortS1=FALSE, abortS2=FALSE;
+int abortS1=FALSE, abortS2=FALSE, abortS3=FALSE;
 sem_t semS1, semS2;
 struct timespec start_time_val;
 double start_realtime;
@@ -290,7 +290,7 @@ void Sequencer(int id)
 
 	    // shutdown all services
         sem_post(&semS1); sem_post(&semS2);
-        abortS1=TRUE; abortS2=TRUE;
+        abortS1=TRUE; abortS2=TRUE; abortS3=TRUE;
     }
 
 }
@@ -394,7 +394,7 @@ void *Service_3(void *threadp)
     double current_realtime = 0;
     struct timespec current_time_val;
 
-    while (!abortTest)
+    while (!abortS3)
     {
         clock_gettime(CLOCK_REALTIME, &timeout);
         timeout.tv_sec += 10; // wait up to 10 seconds
