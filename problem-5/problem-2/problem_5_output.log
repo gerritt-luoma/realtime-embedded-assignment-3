@@ -1,0 +1,232 @@
+Jun 29 11:34:36 arthur seqgen3[34104]: S1 1 Hz on core 2 for release  177: lat=227.00000, lon=-394.00000, alt=141.15000, roll=0.87759, pitch=0.50789, yaw=0.47941 @ sec=1822949.107546048
+Jun 29 11:34:37 arthur seqgen3[34104]: S1 1 Hz on core 2 for release  178: lat=228.00000, lon=-396.00000, alt=141.10000, roll=0.87758, pitch=-0.50787, yaw=-0.47944 @ sec=1822950.107548918
+Jun 29 11:34:38 arthur seqgen3[34104]: S1 1 Hz on core 2 for release  179: lat=229.00000, lon=-398.00000, alt=141.05000, roll=0.07072, pitch=-0.99465, yaw=-0.99750 @ sec=1822951.107558714
+Jun 29 11:34:39 arthur seqgen3[34104]: S1 1 Hz on core 2 for release  180: lat=230.00000, lon=-400.00000, alt=141.00000, roll=-0.80115, pitch=-0.72830, yaw=-0.59846 @ sec=1822952.107576491
+Jun 29 11:34:39 arthur seqgen3[34104]: S2 0.1 Hz on core 2 for release 18: lat=230.00000, lon=-400.00000, alt=141.00000, roll=-0.80115, pitch=-0.72830, yaw=-0.59846 @ sec=1822952.107576491
+Jun 29 11:34:39 arthur seqgen3[34104]: No new data available at 1822952.109031787
+Jun 29 11:34:49 arthur seqgen3[34104]: No new data available at 1822962.109208911
+Jun 29 11:34:59 arthur seqgen3[34104]: No new data available at 1822972.109449035
+Jun 29 11:35:09 arthur seqgen3[34104]: No new data available at 1822982.109676399
+Jun 29 11:35:10 arthur sudo[34102]: pam_unix(sudo:session): session closed for user root
+Jun 29 11:36:45 arthur sudo[34142]:  gerritt : TTY=pts/0 ; PWD=/home/gerritt/repos/realtime-embedded-assignment-3/problem-5/problem-2 ; USER=root ; COMMAND=./seqgen3
+Jun 29 11:36:45 arthur sudo[34142]: pam_unix(sudo:session): session opened for user root(uid=0) by gerritt(uid=1000)
+Jun 29 11:36:45 arthur seqgen3[34144]: START Low Rate Sequencer @ sec=0.000000315 with resolution 0.000000001
+Jun 29 11:36:45 arthur seqgen3[34144]: S1 thread @ sec=0.001168537
+Jun 29 11:36:45 arthur seqgen3[34144]: S2 thread @ sec=0.001343315
+Jun 29 11:36:46 arthur seqgen3[34144]: S1 1 Hz on core 2 for release    1: lat=51.00000, lon=-42.00000, alt=149.95000, roll=0.84147, pitch=0.54030, yaw=0.54030 @ sec=1823079.216900860
+Jun 29 11:36:47 arthur seqgen3[34144]: S1 1 Hz on core 2 for release    2: lat=52.00000, lon=-44.00000, alt=149.90000, roll=0.90930, pitch=-0.65364, yaw=-0.41615 @ sec=1823080.216802600
+Jun 29 11:36:48 arthur seqgen3[34144]: S1 1 Hz on core 2 for release    3: lat=53.00000, lon=-46.00000, alt=149.85000, roll=0.14112, pitch=-0.91113, yaw=-0.98999 @ sec=1823081.216798747
+Jun 29 11:36:49 arthur seqgen3[34144]: S1 1 Hz on core 2 for release    4: lat=54.00000, lon=-48.00000, alt=149.80000, roll=-0.75680, pitch=-0.95766, yaw=-0.65364 @ sec=1823082.216811117
+Jun 29 11:36:50 arthur seqgen3[34144]: S1 1 Hz on core 2 for release    5: lat=55.00000, lon=-50.00000, alt=149.75000, roll=-0.95892, pitch=0.99120, yaw=0.28366 @ sec=1823083.216812450
+Jun 29 11:36:51 arthur seqgen3[34144]: S1 1 Hz on core 2 for release    6: lat=56.00000, lon=-52.00000, alt=149.70000, roll=-0.27942, pitch=-0.12796, yaw=0.96017 @ sec=1823084.216829375
+Jun 29 11:36:52 arthur seqgen3[34144]: S1 1 Hz on core 2 for release    7: lat=57.00000, lon=-54.00000, alt=149.65000, roll=0.65699, pitch=0.30059, yaw=0.75390 @ sec=1823085.216848023
+Jun 29 11:36:53 arthur seqgen3[34144]: S1 1 Hz on core 2 for release    8: lat=58.00000, lon=-56.00000, alt=149.60000, roll=0.98936, pitch=0.39186, yaw=-0.14550 @ sec=1823086.216854689
+Jun 29 11:36:54 arthur seqgen3[34144]: S1 1 Hz on core 2 for release    9: lat=59.00000, lon=-58.00000, alt=149.55000, roll=0.41212, pitch=0.77669, yaw=-0.91113 @ sec=1823087.216859318
+Jun 29 11:36:55 arthur seqgen3[34144]: No new data available at 1823088.216796299
+Jun 29 11:36:55 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   10: lat=60.00000, lon=-60.00000, alt=149.50000, roll=-0.54402, pitch=0.86232, yaw=-0.83907 @ sec=1823088.216857780
+Jun 29 11:36:55 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  1: lat=60.00000, lon=-60.00000, alt=149.50000, roll=-0.54402, pitch=0.86232, yaw=-0.83907 @ sec=1823088.216857780
+Jun 29 11:36:56 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   11: lat=61.00000, lon=-62.00000, alt=149.45000, roll=-0.99999, pitch=-0.04866, yaw=0.00443 @ sec=1823089.216883206
+Jun 29 11:36:57 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   12: lat=62.00000, lon=-64.00000, alt=149.40000, roll=-0.53657, pitch=0.87115, yaw=0.84385 @ sec=1823090.216889112
+Jun 29 11:36:58 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   13: lat=63.00000, lon=-66.00000, alt=149.35000, roll=0.42017, pitch=0.79850, yaw=0.90745 @ sec=1823091.216906390
+Jun 29 11:36:59 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   14: lat=64.00000, lon=-68.00000, alt=149.30000, roll=0.99061, pitch=0.34247, yaw=0.13674 @ sec=1823092.216914074
+Jun 29 11:37:00 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   15: lat=65.00000, lon=-70.00000, alt=149.25000, roll=0.65029, pitch=0.36732, yaw=-0.75969 @ sec=1823093.216922222
+Jun 29 11:37:01 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   16: lat=66.00000, lon=-72.00000, alt=149.20000, roll=-0.28790, pitch=-0.03979, yaw=-0.95766 @ sec=1823094.216926054
+Jun 29 11:37:02 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   17: lat=67.00000, lon=-74.00000, alt=149.15000, roll=-0.96140, pitch=0.99965, yaw=-0.27516 @ sec=1823095.216936165
+Jun 29 11:37:03 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   18: lat=68.00000, lon=-76.00000, alt=149.10000, roll=-0.75099, pitch=-0.91473, yaw=0.66032 @ sec=1823096.216964831
+Jun 29 11:37:04 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   19: lat=69.00000, lon=-78.00000, alt=149.05000, roll=0.14988, pitch=-0.96018, yaw=0.98870 @ sec=1823097.216962867
+Jun 29 11:37:05 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   20: lat=70.00000, lon=-80.00000, alt=149.00000, roll=0.91295, pitch=-0.52530, yaw=0.40808 @ sec=1823098.216962052
+Jun 29 11:37:05 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  2: lat=70.00000, lon=-80.00000, alt=149.00000, roll=0.91295, pitch=-0.52530, yaw=0.40808 @ sec=1823098.216962052
+Jun 29 11:37:05 arthur seqgen3[34144]: No new data available at 1823098.217205571
+Jun 29 11:37:06 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   21: lat=71.00000, lon=-82.00000, alt=148.95000, roll=0.83666, pitch=0.38367, yaw=-0.54773 @ sec=1823099.216970181
+Jun 29 11:37:07 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   22: lat=72.00000, lon=-84.00000, alt=148.90000, roll=-0.00885, pitch=0.98110, yaw=-0.99996 @ sec=1823100.216978588
+Jun 29 11:37:08 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   23: lat=73.00000, lon=-86.00000, alt=148.85000, roll=-0.84622, pitch=0.35074, yaw=-0.53283 @ sec=1823101.216998865
+Jun 29 11:37:09 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   24: lat=74.00000, lon=-88.00000, alt=148.80000, roll=-0.90558, pitch=-0.46378, yaw=0.42418 @ sec=1823102.217011587
+Jun 29 11:37:10 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   25: lat=75.00000, lon=-90.00000, alt=148.75000, roll=-0.13235, pitch=-0.98439, yaw=0.99120 @ sec=1823103.217020475
+Jun 29 11:37:11 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   26: lat=76.00000, lon=-92.00000, alt=148.70000, roll=0.76256, pitch=-0.84854, yaw=0.64692 @ sec=1823104.217032937
+Jun 29 11:37:12 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   27: lat=77.00000, lon=-94.00000, alt=148.65000, roll=0.95638, pitch=0.98870, yaw=-0.29214 @ sec=1823105.217028215
+Jun 29 11:37:13 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   28: lat=78.00000, lon=-96.00000, alt=148.60000, roll=0.27091, pitch=0.17178, yaw=-0.96261 @ sec=1823106.217038084
+Jun 29 11:37:14 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   29: lat=79.00000, lon=-98.00000, alt=148.55000, roll=-0.66363, pitch=0.58426, yaw=-0.74806 @ sec=1823107.217058602
+Jun 29 11:37:15 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   30: lat=80.00000, lon=-100.00000, alt=148.50000, roll=-0.98803, pitch=0.06625, yaw=0.15425 @ sec=1823108.217067120
+Jun 29 11:37:15 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  3: lat=80.00000, lon=-100.00000, alt=148.50000, roll=-0.98803, pitch=0.06625, yaw=0.15425 @ sec=1823108.217067120
+Jun 29 11:37:15 arthur seqgen3[34144]: No new data available at 1823108.217384602
+Jun 29 11:37:16 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   31: lat=81.00000, lon=-102.00000, alt=148.45000, roll=-0.40404, pitch=0.94690, yaw=0.91474 @ sec=1823109.217081842
+Jun 29 11:37:17 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   32: lat=82.00000, lon=-104.00000, alt=148.40000, roll=0.55143, pitch=0.98735, yaw=0.83422 @ sec=1823110.217084286
+Jun 29 11:37:18 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   33: lat=83.00000, lon=-106.00000, alt=148.35000, roll=0.99991, pitch=-0.42426, yaw=-0.01328 @ sec=1823111.217097878
+Jun 29 11:37:19 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   34: lat=84.00000, lon=-108.00000, alt=148.30000, roll=0.52908, pitch=0.99438, yaw=-0.84857 @ sec=1823112.217106673
+Jun 29 11:37:20 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   35: lat=85.00000, lon=-110.00000, alt=148.25000, roll=-0.42818, pitch=0.97565, yaw=-0.90369 @ sec=1823113.217106488
+Jun 29 11:37:21 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   36: lat=86.00000, lon=-112.00000, alt=148.20000, roll=-0.99178, pitch=-0.09290, yaw=-0.12796 @ sec=1823114.217145617
+Jun 29 11:37:22 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   37: lat=87.00000, lon=-114.00000, alt=148.15000, roll=-0.64354, pitch=0.74224, yaw=0.76541 @ sec=1823115.217140746
+Jun 29 11:37:23 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   38: lat=88.00000, lon=-116.00000, alt=148.10000, roll=0.29637, pitch=0.42429, yaw=0.95507 @ sec=1823116.217133967
+Jun 29 11:37:24 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   39: lat=89.00000, lon=-118.00000, alt=148.05000, roll=0.96380, pitch=0.89195, yaw=0.26664 @ sec=1823117.217149707
+Jun 29 11:37:25 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   40: lat=90.00000, lon=-120.00000, alt=148.00000, roll=0.74511, pitch=-0.59836, yaw=-0.66694 @ sec=1823118.217170225
+Jun 29 11:37:25 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  4: lat=90.00000, lon=-120.00000, alt=148.00000, roll=0.74511, pitch=-0.59836, yaw=-0.66694 @ sec=1823118.217170225
+Jun 29 11:37:25 arthur seqgen3[34144]: No new data available at 1823118.217549392
+Jun 29 11:37:26 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   41: lat=91.00000, lon=-122.00000, alt=147.95000, roll=-0.15862, pitch=-0.96942, yaw=-0.98734 @ sec=1823119.217172336
+Jun 29 11:37:27 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   42: lat=92.00000, lon=-124.00000, alt=147.90000, roll=-0.91652, pitch=-0.00427, yaw=-0.39999 @ sec=1823120.217185780
+Jun 29 11:37:28 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   43: lat=93.00000, lon=-126.00000, alt=147.85000, roll=-0.83177, pitch=-0.17187, yaw=0.55511 @ sec=1823121.217187353
+Jun 29 11:37:29 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   44: lat=94.00000, lon=-128.00000, alt=147.80000, roll=0.01770, pitch=0.71167, yaw=0.99984 @ sec=1823122.217197945
+Jun 29 11:37:30 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   45: lat=95.00000, lon=-130.00000, alt=147.75000, roll=0.85090, pitch=-0.24113, yaw=0.52532 @ sec=1823123.217205056
+Jun 29 11:37:31 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   46: lat=96.00000, lon=-132.00000, alt=147.70000, roll=0.90179, pitch=0.13692, yaw=-0.43218 @ sec=1823124.217216462
+Jun 29 11:37:32 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   47: lat=97.00000, lon=-134.00000, alt=147.65000, roll=0.12357, pitch=-0.89589, yaw=-0.99234 @ sec=1823125.217224869
+Jun 29 11:37:33 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   48: lat=98.00000, lon=-136.00000, alt=147.60000, roll=-0.76825, pitch=-0.35060, yaw=-0.64014 @ sec=1823126.217229517
+Jun 29 11:37:34 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   49: lat=99.00000, lon=-138.00000, alt=147.55000, roll=-0.95375, pitch=0.67987, yaw=0.30059 @ sec=1823127.217246479
+Jun 29 11:37:35 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   50: lat=100.00000, lon=-140.00000, alt=147.50000, roll=-0.26237, pitch=0.75983, yaw=0.96497 @ sec=1823128.217260219
+Jun 29 11:37:35 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  5: lat=100.00000, lon=-140.00000, alt=147.50000, roll=-0.26237, pitch=0.75983, yaw=0.96497 @ sec=1823128.217260219
+Jun 29 11:37:35 arthur seqgen3[34144]: No new data available at 1823128.217715756
+Jun 29 11:37:36 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   51: lat=101.00000, lon=-142.00000, alt=147.45000, roll=0.67023, pitch=0.97164, yaw=0.74215 @ sec=1823129.217261237
+Jun 29 11:37:37 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   52: lat=102.00000, lon=-144.00000, alt=147.40000, roll=0.98663, pitch=-0.61274, yaw=-0.16299 @ sec=1823130.217275385
+Jun 29 11:37:38 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   53: lat=103.00000, lon=-146.00000, alt=147.35000, roll=0.39593, pitch=0.91464, yaw=-0.91828 @ sec=1823131.217276903
+Jun 29 11:37:39 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   54: lat=104.00000, lon=-148.00000, alt=147.30000, roll=-0.55879, pitch=0.82419, yaw=-0.82931 @ sec=1823132.217305235
+Jun 29 11:37:40 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   55: lat=105.00000, lon=-150.00000, alt=147.25000, roll=-0.99976, pitch=-0.93809, yaw=0.02213 @ sec=1823133.217319235
+Jun 29 11:37:41 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   56: lat=106.00000, lon=-152.00000, alt=147.20000, roll=-0.52155, pitch=0.77091, yaw=0.85322 @ sec=1823134.217321271
+Jun 29 11:37:42 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   57: lat=107.00000, lon=-154.00000, alt=147.15000, roll=0.43616, pitch=0.82916, yaw=0.89987 @ sec=1823135.217319345
+Jun 29 11:37:43 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   58: lat=108.00000, lon=-156.00000, alt=147.10000, roll=0.99287, pitch=-0.79866, yaw=0.11918 @ sec=1823136.217340900
+Jun 29 11:37:44 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   59: lat=109.00000, lon=-158.00000, alt=147.05000, roll=0.63674, pitch=0.99336, yaw=-0.77108 @ sec=1823137.217346529
+Jun 29 11:37:45 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   60: lat=110.00000, lon=-160.00000, alt=147.00000, roll=-0.30481, pitch=0.96505, yaw=-0.95241 @ sec=1823138.217357769
+Jun 29 11:37:45 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  6: lat=110.00000, lon=-160.00000, alt=147.00000, roll=-0.30481, pitch=0.96505, yaw=-0.95241 @ sec=1823138.217357769
+Jun 29 11:37:45 arthur seqgen3[34144]: No new data available at 1823138.217886084
+Jun 29 11:37:46 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   61: lat=111.00000, lon=-162.00000, alt=146.95000, roll=-0.96612, pitch=0.21481, yaw=-0.25810 @ sec=1823139.217359768
+Jun 29 11:37:47 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   62: lat=112.00000, lon=-164.00000, alt=146.90000, roll=-0.73918, pitch=0.25842, yaw=0.67351 @ sec=1823140.217362212
+Jun 29 11:37:48 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   63: lat=113.00000, lon=-166.00000, alt=146.85000, roll=0.16736, pitch=-0.39155, yaw=0.98590 @ sec=1823141.217383712
+Jun 29 11:37:49 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   64: lat=114.00000, lon=-168.00000, alt=146.80000, roll=0.92003, pitch=0.80399, yaw=0.39186 @ sec=1823142.217394637
+Jun 29 11:37:50 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   65: lat=115.00000, lon=-170.00000, alt=146.75000, roll=0.82683, pitch=-0.90385, yaw=-0.56245 @ sec=1823143.217401729
+Jun 29 11:37:51 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   66: lat=116.00000, lon=-172.00000, alt=146.70000, roll=-0.02655, pitch=-0.18079, yaw=-0.99965 @ sec=1823144.217401228
+Jun 29 11:37:52 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   67: lat=117.00000, lon=-174.00000, alt=146.65000, roll=-0.85552, pitch=-0.94411, yaw=-0.51777 @ sec=1823145.217427209
+Jun 29 11:37:53 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   68: lat=118.00000, lon=-176.00000, alt=146.60000, roll=-0.89793, pitch=0.91129, yaw=0.44014 @ sec=1823146.217433931
+Jun 29 11:37:54 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   69: lat=119.00000, lon=-178.00000, alt=146.55000, roll=-0.11478, pitch=-0.08357, yaw=0.99339 @ sec=1823147.217439801
+Jun 29 11:37:55 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   70: lat=120.00000, lon=-180.00000, alt=146.50000, roll=0.77389, pitch=0.63365, yaw=0.63332 @ sec=1823148.217457948
+Jun 29 11:37:55 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  7: lat=120.00000, lon=-180.00000, alt=146.50000, roll=0.77389, pitch=0.63365, yaw=0.63332 @ sec=1823148.217457948
+Jun 29 11:37:55 arthur seqgen3[34144]: No new data available at 1823148.218054985
+Jun 29 11:37:56 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   71: lat=121.00000, lon=-182.00000, alt=146.45000, roll=0.95105, pitch=-0.30942, yaw=-0.30902 @ sec=1823149.217464929
+Jun 29 11:37:57 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   72: lat=122.00000, lon=-184.00000, alt=146.40000, roll=0.25382, pitch=0.93156, yaw=-0.96725 @ sec=1823150.217473243
+Jun 29 11:37:58 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   73: lat=123.00000, lon=-186.00000, alt=146.35000, roll=-0.67677, pitch=0.65330, yaw=-0.73619 @ sec=1823151.217481798
+Jun 29 11:37:59 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   74: lat=124.00000, lon=-188.00000, alt=146.30000, roll=-0.98515, pitch=-0.97926, yaw=0.17172 @ sec=1823152.217495372
+Jun 29 11:38:00 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   75: lat=125.00000, lon=-190.00000, alt=146.25000, roll=-0.38778, pitch=0.02164, yaw=0.92175 @ sec=1823153.217494167
+Jun 29 11:38:01 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   76: lat=126.00000, lon=-192.00000, alt=146.20000, roll=0.56611, pitch=-0.18090, yaw=0.82433 @ sec=1823154.217508130
+Jun 29 11:38:02 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   77: lat=127.00000, lon=-194.00000, alt=146.15000, roll=0.99952, pitch=-0.68611, yaw=-0.03098 @ sec=1823155.217520888
+Jun 29 11:38:03 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   78: lat=128.00000, lon=-196.00000, alt=146.10000, roll=0.51398, pitch=-0.30108, yaw=-0.85780 @ sec=1823156.217520129
+Jun 29 11:38:04 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   79: lat=129.00000, lon=-198.00000, alt=146.05000, roll=-0.44411, pitch=-0.22427, yaw=-0.89597 @ sec=1823157.217531906
+Jun 29 11:38:05 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   80: lat=130.00000, lon=-200.00000, alt=146.00000, roll=-0.99389, pitch=-0.83878, yaw=-0.11039 @ sec=1823158.217544146
+Jun 29 11:38:05 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  8: lat=130.00000, lon=-200.00000, alt=146.00000, roll=-0.99389, pitch=-0.83878, yaw=-0.11039 @ sec=1823158.217544146
+Jun 29 11:38:05 arthur seqgen3[34144]: No new data available at 1823158.218226331
+Jun 29 11:38:06 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   81: lat=131.00000, lon=-202.00000, alt=145.95000, roll=-0.62989, pitch=0.21458, yaw=0.77669 @ sec=1823159.217548886
+Jun 29 11:38:07 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   82: lat=132.00000, lon=-204.00000, alt=145.90000, roll=0.31323, pitch=0.54725, yaw=0.94968 @ sec=1823160.217567330
+Jun 29 11:38:08 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   83: lat=133.00000, lon=-206.00000, alt=145.85000, roll=0.96836, pitch=-0.87143, yaw=0.24954 @ sec=1823161.217581477
+Jun 29 11:38:09 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   84: lat=134.00000, lon=-208.00000, alt=145.80000, roll=0.73319, pitch=0.99985, yaw=-0.68002 @ sec=1823162.217585569
+Jun 29 11:38:10 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   85: lat=135.00000, lon=-210.00000, alt=145.75000, roll=-0.17608, pitch=0.78809, yaw=-0.98438 @ sec=1823163.217605532
+Jun 29 11:38:11 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   86: lat=136.00000, lon=-212.00000, alt=145.70000, roll=-0.92346, pitch=0.77068, yaw=-0.38370 @ sec=1823164.217609624
+Jun 29 11:38:12 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   87: lat=137.00000, lon=-214.00000, alt=145.65000, roll=-0.82182, pitch=-0.61902, yaw=0.56975 @ sec=1823165.217620290
+Jun 29 11:38:13 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   88: lat=138.00000, lon=-216.00000, alt=145.60000, roll=0.03540, pitch=-0.99966, yaw=0.99937 @ sec=1823166.217629808
+Jun 29 11:38:14 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   89: lat=139.00000, lon=-218.00000, alt=145.55000, roll=0.86007, pitch=-0.50197, yaw=0.51018 @ sec=1823167.217628715
+Jun 29 11:38:15 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   90: lat=140.00000, lon=-220.00000, alt=145.50000, roll=0.89400, pitch=0.56188, yaw=-0.44807 @ sec=1823168.217651344
+Jun 29 11:38:15 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  9: lat=140.00000, lon=-220.00000, alt=145.50000, roll=0.89400, pitch=0.56188, yaw=-0.44807 @ sec=1823168.217651344
+Jun 29 11:38:15 arthur seqgen3[34144]: No new data available at 1823168.218396603
+Jun 29 11:38:16 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   91: lat=141.00000, lon=-222.00000, alt=145.45000, roll=0.10599, pitch=0.97176, yaw=-0.99437 @ sec=1823169.217652621
+Jun 29 11:38:17 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   92: lat=142.00000, lon=-224.00000, alt=145.40000, roll=-0.77947, pitch=0.85284, yaw=-0.62644 @ sec=1823170.217666620
+Jun 29 11:38:18 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   93: lat=143.00000, lon=-226.00000, alt=145.35000, roll=-0.94828, pitch=-0.98097, yaw=0.31743 @ sec=1823171.217674601
+Jun 29 11:38:19 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   94: lat=144.00000, lon=-228.00000, alt=145.30000, roll=-0.24525, pitch=-0.26737, yaw=0.96946 @ sec=1823172.217682934
+Jun 29 11:38:20 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   95: lat=145.00000, lon=-230.00000, alt=145.25000, roll=0.68326, pitch=-0.69979, yaw=0.73017 @ sec=1823173.217686600
+Jun 29 11:38:21 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   96: lat=146.00000, lon=-232.00000, alt=145.20000, roll=0.98359, pitch=0.13751, yaw=-0.18043 @ sec=1823174.217707840
+Jun 29 11:38:22 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   97: lat=147.00000, lon=-234.00000, alt=145.15000, roll=0.37961, pitch=-0.99755, yaw=-0.92515 @ sec=1823175.217717302
+Jun 29 11:38:23 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   98: lat=148.00000, lon=-236.00000, alt=145.10000, roll=-0.57338, pitch=-0.98858, yaw=-0.81929 @ sec=1823176.217723154
+Jun 29 11:38:24 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   99: lat=149.00000, lon=-238.00000, alt=145.05000, roll=-0.99921, pitch=0.71855, yaw=0.03982 @ sec=1823177.217723838
+Jun 29 11:38:25 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  100: lat=150.00000, lon=-240.00000, alt=145.00000, roll=-0.50637, pitch=-0.95216, yaw=0.86232 @ sec=1823178.217737134
+Jun 29 11:38:25 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release 10: lat=150.00000, lon=-240.00000, alt=145.00000, roll=-0.50637, pitch=-0.95216, yaw=0.86232 @ sec=1823178.217737134
+Jun 29 11:38:25 arthur seqgen3[34144]: No new data available at 1823178.218570541
+Jun 29 11:38:26 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  101: lat=151.00000, lon=-242.00000, alt=144.95000, roll=0.45203, pitch=-0.96924, yaw=0.89200 @ sec=1823179.217749115
+Jun 29 11:38:27 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  102: lat=152.00000, lon=-244.00000, alt=144.90000, roll=0.99483, pitch=0.57772, yaw=0.10159 @ sec=1823180.217753059
+Jun 29 11:38:28 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  103: lat=153.00000, lon=-246.00000, alt=144.85000, roll=0.62299, pitch=-0.98748, yaw=-0.78223 @ sec=1823181.217772447
+Jun 29 11:38:29 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  104: lat=154.00000, lon=-248.00000, alt=144.80000, roll=-0.32162, pitch=-0.87590, yaw=-0.94687 @ sec=1823182.217770854
+Jun 29 11:38:30 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  105: lat=155.00000, lon=-250.00000, alt=144.75000, roll=-0.97054, pitch=-0.40723, yaw=-0.24096 @ sec=1823183.217789927
+Jun 29 11:38:31 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  106: lat=156.00000, lon=-252.00000, alt=144.70000, roll=-0.72714, pitch=-0.09374, yaw=0.68649 @ sec=1823184.217792704
+Jun 29 11:38:32 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  107: lat=157.00000, lon=-254.00000, alt=144.65000, roll=0.18478, pitch=0.50935, yaw=0.98278 @ sec=1823185.217812204
+Jun 29 11:38:33 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  108: lat=158.00000, lon=-256.00000, alt=144.60000, roll=0.92682, pitch=-0.74282, yaw=0.37551 @ sec=1823186.217819240
+Jun 29 11:38:34 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  109: lat=159.00000, lon=-258.00000, alt=144.55000, roll=0.81674, pitch=0.87594, yaw=-0.57700 @ sec=1823187.217830036
+Jun 29 11:38:35 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  110: lat=160.00000, lon=-260.00000, alt=144.50000, roll=-0.04424, pitch=0.15526, yaw=-0.99902 @ sec=1823188.217842184
+Jun 29 11:38:35 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release 11: lat=160.00000, lon=-260.00000, alt=144.50000, roll=-0.04424, pitch=0.15526, yaw=-0.99902 @ sec=1823188.217842184
+Jun 29 11:38:35 arthur seqgen3[34144]: No new data available at 1823188.218744702
+Jun 29 11:38:36 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  111: lat=161.00000, lon=-262.00000, alt=144.45000, roll=-0.86455, pitch=0.94721, yaw=-0.50254 @ sec=1823189.217850831
+Jun 29 11:38:37 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  112: lat=162.00000, lon=-264.00000, alt=144.40000, roll=-0.89000, pitch=-0.92886, yaw=0.45597 @ sec=1823190.217857368
+Jun 29 11:38:38 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  113: lat=163.00000, lon=-266.00000, alt=144.35000, roll=-0.09718, pitch=0.00334, yaw=0.99527 @ sec=1823191.217861534
+Jun 29 11:38:39 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  114: lat=164.00000, lon=-268.00000, alt=144.30000, roll=0.78498, pitch=-0.71874, yaw=0.61952 @ sec=1823192.217881700
+Jun 29 11:38:40 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  115: lat=165.00000, lon=-270.00000, alt=144.25000, roll=0.94544, pitch=0.44907, yaw=-0.32581 @ sec=1823193.217886569
+Jun 29 11:38:41 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  116: lat=166.00000, lon=-272.00000, alt=144.20000, roll=0.23666, pitch=-0.84796, yaw=-0.97159 @ sec=1823194.217891865
+Jun 29 11:38:42 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  117: lat=167.00000, lon=-274.00000, alt=144.15000, roll=-0.68970, pitch=-0.47062, yaw=-0.72410 @ sec=1823195.217911698
+Jun 29 11:38:43 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  118: lat=168.00000, lon=-276.00000, alt=144.10000, roll=-0.98195, pitch=0.89545, yaw=0.18913 @ sec=1823196.217917197
+Jun 29 11:38:44 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  119: lat=169.00000, lon=-278.00000, alt=144.05000, roll=-0.37140, pitch=0.26780, yaw=0.92847 @ sec=1823197.217930567
+Jun 29 11:38:45 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  120: lat=170.00000, lon=-280.00000, alt=144.00000, roll=0.58061, pitch=0.48824, yaw=0.81418 @ sec=1823198.217932437
+Jun 29 11:38:45 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release 12: lat=170.00000, lon=-280.00000, alt=144.00000, roll=0.58061, pitch=0.48824, yaw=0.81418 @ sec=1823198.217932437
+Jun 29 11:38:45 arthur seqgen3[34144]: No new data available at 1823198.218918955
+Jun 29 11:38:46 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  121: lat=171.00000, lon=-282.00000, alt=143.95000, roll=0.99882, pitch=0.38256, yaw=-0.04866 @ sec=1823199.217942436
+Jun 29 11:38:47 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  122: lat=172.00000, lon=-284.00000, alt=143.90000, roll=0.49871, pitch=0.64788, yaw=-0.86677 @ sec=1823200.217945232
+Jun 29 11:38:48 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  123: lat=173.00000, lon=-286.00000, alt=143.85000, roll=-0.45990, pitch=0.61357, yaw=-0.88797 @ sec=1823201.217955380
+Jun 29 11:38:49 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  124: lat=174.00000, lon=-288.00000, alt=143.80000, roll=-0.99569, pitch=0.50142, yaw=-0.09278 @ sec=1823202.217976046
+Jun 29 11:38:50 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  125: lat=175.00000, lon=-290.00000, alt=143.75000, roll=-0.61604, pitch=0.28493, yaw=0.78771 @ sec=1823203.217977471
+Jun 29 11:38:51 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  126: lat=176.00000, lon=-292.00000, alt=143.70000, roll=0.32999, pitch=-0.03847, yaw=0.94398 @ sec=1823204.218007563
+Jun 29 11:38:52 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  127: lat=177.00000, lon=-294.00000, alt=143.65000, roll=0.97263, pitch=0.99800, yaw=0.23236 @ sec=1823205.218007581
+Jun 29 11:38:53 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  128: lat=178.00000, lon=-296.00000, alt=143.60000, roll=0.72104, pitch=-0.82853, yaw=-0.69290 @ sec=1823206.218003469
+Jun 29 11:38:54 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  129: lat=179.00000, lon=-298.00000, alt=143.55000, roll=-0.19347, pitch=-0.99987, yaw=-0.98111 @ sec=1823207.218019209
+Jun 29 11:38:55 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  130: lat=180.00000, lon=-300.00000, alt=143.50000, roll=-0.93011, pitch=-0.19640, yaw=-0.36729 @ sec=1823208.218038005
+Jun 29 11:38:55 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release 13: lat=180.00000, lon=-300.00000, alt=143.50000, roll=-0.93011, pitch=-0.19640, yaw=-0.36729 @ sec=1823208.218038005
+Jun 29 11:38:55 arthur seqgen3[34144]: No new data available at 1823208.219094246
+Jun 29 11:38:56 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  131: lat=181.00000, lon=-302.00000, alt=143.45000, roll=-0.81160, pitch=-0.05011, yaw=0.58421 @ sec=1823209.218036986
+Jun 29 11:38:57 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  132: lat=182.00000, lon=-304.00000, alt=143.40000, roll=0.05308, pitch=0.74708, yaw=0.99859 @ sec=1823210.218045078
+Jun 29 11:38:58 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  133: lat=183.00000, lon=-306.00000, alt=143.35000, roll=0.86897, pitch=-0.25956, yaw=0.49487 @ sec=1823211.218053059
+Jun 29 11:38:59 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  134: lat=184.00000, lon=-308.00000, alt=143.30000, roll=0.88592, pitch=0.22524, yaw=-0.46383 @ sec=1823212.218064354
+Jun 29 11:39:00 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  135: lat=185.00000, lon=-310.00000, alt=143.25000, roll=0.08837, pitch=-0.81329, yaw=-0.99609 @ sec=1823213.218071687
+Jun 29 11:39:01 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  136: lat=186.00000, lon=-312.00000, alt=143.20000, roll=-0.79043, pitch=-0.12641, yaw=-0.61255 @ sec=1823214.218093594
+Jun 29 11:39:02 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  137: lat=187.00000, lon=-314.00000, alt=143.15000, roll=-0.94251, pitch=0.43074, yaw=0.33417 @ sec=1823215.218104093
+Jun 29 11:39:03 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  138: lat=188.00000, lon=-316.00000, alt=143.10000, roll=-0.22805, pitch=0.94452, yaw=0.97365 @ sec=1823216.218108259
+Jun 29 11:39:04 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  139: lat=189.00000, lon=-318.00000, alt=143.05000, roll=0.69608, pitch=0.97902, yaw=0.71796 @ sec=1823217.218122648
+Jun 29 11:39:05 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  140: lat=190.00000, lon=-320.00000, alt=143.00000, roll=0.98024, pitch=-0.92239, yaw=-0.19781 @ sec=1823218.218129666
+Jun 29 11:39:05 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release 14: lat=190.00000, lon=-320.00000, alt=143.00000, roll=0.98024, pitch=-0.92239, yaw=-0.19781 @ sec=1823218.218129666
+Jun 29 11:39:05 arthur seqgen3[34144]: No new data available at 1823218.219270055
+Jun 29 11:39:06 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  141: lat=191.00000, lon=-322.00000, alt=142.95000, roll=0.36317, pitch=0.53888, yaw=-0.93172 @ sec=1823219.218134165
+Jun 29 11:39:07 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  142: lat=192.00000, lon=-324.00000, alt=142.90000, roll=-0.58780, pitch=0.30739, yaw=-0.80901 @ sec=1823220.218150702
+Jun 29 11:39:08 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  143: lat=193.00000, lon=-326.00000, alt=142.85000, roll=-0.99835, pitch=-0.93109, yaw=0.05750 @ sec=1823221.218152164
+Jun 29 11:39:09 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  144: lat=194.00000, lon=-328.00000, alt=142.80000, roll=-0.49102, pitch=0.08222, yaw=0.87115 @ sec=1823222.218160756
+Jun 29 11:39:10 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  145: lat=195.00000, lon=-330.00000, alt=142.75000, roll=0.46775, pitch=0.10862, yaw=0.88386 @ sec=1823223.218163626
+Jun 29 11:39:11 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  146: lat=196.00000, lon=-332.00000, alt=142.70000, roll=0.99647, pitch=-0.95714, yaw=0.08396 @ sec=1823224.218189477
+Jun 29 11:39:12 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  147: lat=197.00000, lon=-334.00000, alt=142.65000, roll=0.60904, pitch=0.43052, yaw=-0.79314 @ sec=1823225.218193217
+Jun 29 11:39:13 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  148: lat=198.00000, lon=-336.00000, alt=142.60000, roll=-0.33833, pitch=0.68513, yaw=-0.94103 @ sec=1823226.218207383
+Jun 29 11:39:14 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  149: lat=199.00000, lon=-338.00000, alt=142.55000, roll=-0.97465, pitch=-0.80490, yaw=-0.22374 @ sec=1823227.218222308
+Jun 29 11:39:15 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  150: lat=200.00000, lon=-340.00000, alt=142.50000, roll=-0.71488, pitch=0.99625, yaw=0.69925 @ sec=1823228.218231623
+Jun 29 11:39:15 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release 15: lat=200.00000, lon=-340.00000, alt=142.50000, roll=-0.71488, pitch=0.99625, yaw=0.69925 @ sec=1823228.218231623
+Jun 29 11:39:15 arthur seqgen3[34144]: No new data available at 1823228.219448104
+Jun 29 11:39:16 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  151: lat=201.00000, lon=-342.00000, alt=142.45000, roll=0.20215, pitch=0.77790, yaw=0.97935 @ sec=1823229.218239196
+Jun 29 11:39:17 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  152: lat=202.00000, lon=-344.00000, alt=142.40000, roll=0.93332, pitch=0.74676, yaw=0.35904 @ sec=1823230.218246084
+Jun 29 11:39:18 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  153: lat=203.00000, lon=-346.00000, alt=142.35000, roll=0.80640, pitch=-0.54606, yaw=-0.59137 @ sec=1823231.218251399
+Jun 29 11:39:19 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  154: lat=204.00000, lon=-348.00000, alt=142.30000, roll=-0.06192, pitch=-0.99316, yaw=-0.99808 @ sec=1823232.218258157
+Jun 29 11:39:20 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  155: lat=205.00000, lon=-350.00000, alt=142.25000, roll=-0.87331, pitch=-0.32387, yaw=-0.48716 @ sec=1823233.218269490
+Jun 29 11:39:21 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  156: lat=206.00000, lon=-352.00000, alt=142.20000, roll=-0.88178, pitch=0.34054, yaw=0.47165 @ sec=1823234.218278082
+Jun 29 11:39:22 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  157: lat=207.00000, lon=-354.00000, alt=142.15000, roll=-0.07955, pitch=0.99795, yaw=0.99683 @ sec=1823235.218283007
+Jun 29 11:39:23 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  158: lat=208.00000, lon=-356.00000, alt=142.10000, roll=0.79582, pitch=0.61786, yaw=0.60553 @ sec=1823236.218309988
+Jun 29 11:39:24 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  159: lat=209.00000, lon=-358.00000, alt=142.05000, roll=0.93952, pitch=-0.82312, yaw=-0.34249 @ sec=1823237.218321469
+Jun 29 11:39:25 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  160: lat=210.00000, lon=-360.00000, alt=142.00000, roll=0.21943, pitch=-0.66855, yaw=-0.97563 @ sec=1823238.218328117
+Jun 29 11:39:25 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release 16: lat=210.00000, lon=-360.00000, alt=142.00000, roll=0.21943, pitch=-0.66855, yaw=-0.97563 @ sec=1823238.218328117
+Jun 29 11:39:25 arthur seqgen3[34144]: No new data available at 1823238.219626820
+Jun 29 11:39:26 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  161: lat=211.00000, lon=-362.00000, alt=141.95000, roll=-0.70241, pitch=-0.96078, yaw=-0.71177 @ sec=1823239.218333005
+Jun 29 11:39:27 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  162: lat=212.00000, lon=-364.00000, alt=141.90000, roll=-0.97845, pitch=0.64862, yaw=0.20648 @ sec=1823240.218336912
+Jun 29 11:39:28 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  163: lat=213.00000, lon=-366.00000, alt=141.85000, roll=-0.35491, pitch=-0.85204, yaw=0.93490 @ sec=1823241.218345300
+Jun 29 11:39:29 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  164: lat=214.00000, lon=-368.00000, alt=141.80000, roll=0.59493, pitch=-0.67834, yaw=0.80378 @ sec=1823242.218352114
+Jun 29 11:39:30 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  165: lat=215.00000, lon=-370.00000, alt=141.75000, roll=0.99780, pitch=0.99912, yaw=-0.06634 @ sec=1823243.218363540
+Jun 29 11:39:31 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  166: lat=216.00000, lon=-372.00000, alt=141.70000, roll=0.48329, pitch=-0.46174, yaw=-0.87546 @ sec=1823244.218386632
+Jun 29 11:39:32 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  167: lat=217.00000, lon=-374.00000, alt=141.65000, roll=-0.47555, pitch=-0.46955, yaw=-0.87969 @ sec=1823245.218393761
+Jun 29 11:39:33 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  168: lat=218.00000, lon=-376.00000, alt=141.60000, roll=-0.99717, pitch=0.99766, yaw=-0.07514 @ sec=1823246.218398186
+Jun 29 11:39:34 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  169: lat=219.00000, lon=-378.00000, alt=141.55000, roll=-0.60200, pitch=-0.71008, yaw=0.79850 @ sec=1823247.218409426
+Jun 29 11:39:35 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  170: lat=220.00000, lon=-380.00000, alt=141.50000, roll=0.34665, pitch=-0.88272, yaw=0.93799 @ sec=1823248.218423500
+Jun 29 11:39:35 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release 17: lat=220.00000, lon=-380.00000, alt=141.50000, roll=0.34665, pitch=-0.88272, yaw=0.93799 @ sec=1823248.218423500
+Jun 29 11:39:35 arthur seqgen3[34144]: No new data available at 1823248.219790555
+Jun 29 11:39:36 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  171: lat=221.00000, lon=-382.00000, alt=141.45000, roll=0.97659, pitch=0.58621, yaw=0.21511 @ sec=1823249.218420721
+Jun 29 11:39:37 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  172: lat=222.00000, lon=-384.00000, alt=141.40000, roll=0.70866, pitch=-0.92940, yaw=-0.70555 @ sec=1823250.218442665
+Jun 29 11:39:38 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  173: lat=223.00000, lon=-386.00000, alt=141.35000, roll=-0.21081, pitch=-0.57907, yaw=-0.97753 @ sec=1823251.218441220
+Jun 29 11:39:39 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  174: lat=224.00000, lon=-388.00000, alt=141.30000, roll=-0.93646, pitch=-0.89084, yaw=-0.35077 @ sec=1823252.218457831
+Jun 29 11:39:40 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  175: lat=225.00000, lon=-390.00000, alt=141.25000, roll=-0.80113, pitch=0.72840, yaw=0.59848 @ sec=1823253.218494867
+Jun 29 11:39:41 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  176: lat=226.00000, lon=-392.00000, alt=141.20000, roll=0.07075, pitch=0.99464, yaw=0.99749 @ sec=1823254.218490181
+Jun 29 11:39:42 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  177: lat=227.00000, lon=-394.00000, alt=141.15000, roll=0.87759, pitch=0.50789, yaw=0.47941 @ sec=1823255.218494662
+Jun 29 11:39:43 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  178: lat=228.00000, lon=-396.00000, alt=141.10000, roll=0.87758, pitch=-0.50787, yaw=-0.47944 @ sec=1823256.218505587
+Jun 29 11:39:44 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  179: lat=229.00000, lon=-398.00000, alt=141.05000, roll=0.07072, pitch=-0.99465, yaw=-0.99750 @ sec=1823257.218522346
+Jun 29 11:39:45 arthur seqgen3[34144]: S1 1 Hz on core 2 for release  180: lat=230.00000, lon=-400.00000, alt=141.00000, roll=-0.80115, pitch=-0.72830, yaw=-0.59846 @ sec=1823258.218527049
+Jun 29 11:39:45 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release 18: lat=230.00000, lon=-400.00000, alt=141.00000, roll=-0.80115, pitch=-0.72830, yaw=-0.59846 @ sec=1823258.218527049
+Jun 29 11:39:45 arthur seqgen3[34144]: No new data available at 1823258.219985253
+Jun 29 11:39:45 arthur sudo[34142]: pam_unix(sudo:session): session closed for user root
