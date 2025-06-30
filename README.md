@@ -463,27 +463,349 @@ Thread 2: 8a44f180 done
 All done
 ```
 
+Yes, Linux does have a fix to the priority inheritance problem.  You can change attributes in the mutex to use priority inheritance to unblock the higher priority task and allow it to run.  I have changed the initialization of the shared state mutex to:
 
+```C
+pthread_mutexattr_t attr;
+pthread_mutexattr_init(&attr);
+pthread_mutexattr_setprotocol(&attr, PTHREAD_PRIO_INHERIT); // Explicitly states that threads blocking on the mutex must use priority inheritance
+pthread_mutex_init(&sharedMemSem, &attr);
+```
+
+When using this change, the output of the program has changed to show that the high and low tasks are finishing before the middle priority task is even starting.  This shows that the priority inheritance is working to prevent an unbounded priority inversion.  The output is seen below:
+
+```bash
+$ sudo ./pthread3 10
+Fibonacci Cycle Burner test ...
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 28657 46368 75025 121393 196418 317811 514229 832040 1346269 2178309 3524578 5702887 9227465 14930352 24157817 39088169 63245986 102334155 165580141 267914296 433494437 701408733 1134903170 1836311903 2971215073 512559680 
+
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 28657 46368 75025 121393 196418 317811 514229 832040 1346269 2178309 3524578 5702887 9227465 14930352 24157817 39088169 63245986 102334155 165580141 267914296 433494437 701408733 1134903170 1836311903 2971215073 512559680 
+done
+interference time = 10 secs
+unsafe mutex will be created
+Pthread Policy is SCHED_OTHER
+Setting thread 0 to core 0
+
+Launching thread 0
+min prio = 1, max prio = 99
+PTHREAD SCOPE SYSTEM
+
+Creating RT thread 0
+Start services thread spawned
+will join service threads
+
+Creating Low Prio RT or BE thread 3
+Low prio 3 thread SPAWNED at 0.000142 sec
+......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+CS-L REQUEST
+
+CS-L ENTRY 1
+CS-L1 CS-L2 CScnt=1
+
+Creating RT thread 1, CScnt=1
+
+CS-H REQUEST
+CS-L3 CS-L4 CS-L5 CS-L6 CS-L7 CS-L8 CS-L9 CS-L10 
+CS-L LEAVING
+
+CS-H ENTRY 2
+CS-H1 CS-H2 CS-H3 CS-H4 CS-H5 CS-H6 CS-H7 CS-H8 CS-H9 CS-H10 
+CS-H LEAVING
+
+CS-H EXIT
+
+**** HIGH PRIO 1 on core 0 CRIT SECTION WORK COMPLETED at 0.780355 sec
+
+CS-L EXIT
+
+**** LOW PRIO 3 on core 0 CRIT SECTION WORK COMPLETED at 0.780802 sec
+High prio 1 thread SPAWNED at 0.780844 sec
+
+Creating RT thread 2
+M1 M2 M3 M4 M5 M6 M7 M8 M9 M10 
+**** MID PRIO 2 on core 0 INTERFERE NO SEM COMPLETED at 1.120031 sec
+Middle prio 2 thread SPAWNED at 1.120168 sec
+HIGH PRIO joined
+MID PRIO joined
+LOW PRIO joined
+START SERVICE joined
+All threads done
+```
 
 > C: What about a patch for the Linux kernel? For example, Linux Kernel.org recommends the RT_PREEMPT Patch, also discussed by the Linux Foundation Realtime Start and this blog, but would this really help?
 
-TODO:
+I do not believe the `PREEMPT_RT` patch would be helpful in this scenario as this program is running entirely in userspace and the `PREEMPT_RT` patch just allows anything to be preempted anywhere else in the kernel/user space.  This priority inversion problem seen in the `pthread3.c` program is running entirely in user space and isn't being preempted by the kernel to cause the problem.  The priority inheritance on the mutex seems to do the trick.
 
 > D: Read about the patch and describe why think it would or would not help with unbounded priority inversion. Based on inversion, does it make sense to simply switch to an RTOS and not use Linux at all for both HRT and SRT services?
 
-TODO:
+For Hard Real Time (HRT) services that, when in a fault, could cause loss of life, I believe a true RTOS could still be the correct decision.  This is because they have been used in the field for a long time and are more proven while the `PREEMPT_RT` patch is still relatively new in the main linux kernel branch.  For Soft Real Time (SRT) services, I believe Linux is a fine solution since they don't have hard requirements and the Linux Kernel seems to be able to easily support soft real time.  Given a few more years proving the functionality of the `PREEMPT_RT` patch, I believe Linux could start being considered for hard real time services.
 
 ## Exercise 4
 
 > Review POSIX-Examples-Updated and POSIX_MQ_LOOP and build the code related to POSIX message queues and run them to learn about basic use.
 
+**POSIX-Examples-Updated**
+`clock_nanosleep_test.c` takes in the input of the number of iterations and the number of milliseconds per iteration.  It then loops through the number of specified iterations calling `nanosleep()` for the specified sleep duration and outputs the amount of time that the thread was asleep.  It will also output the amount of error between the requested sleep time and the actual time with the error in microseconds.  Below is the output of the program:
+
+```bash
+$ sudo ./clock_nanosleep_test 10 1000
+Requested 10 iterations for 1000 msecs
+Before adjustments to scheduling policy:
+Pthread Policy is SCHED_OTHER
+After adjustments to scheduling policy:
+Pthread Policy is SCHED_FIFO
+
+
+Thread sleep based delay test for 1 secs, 0 nsecs
+
+
+Clock resolution:
+	0 secs, 0 usecs, 1 nsecs OR 0.000000 secs
+
+
+System ticks_per_sec=100
+
+RT clock dt = 1.000056 secs for sleep of 1.000000 secs, err = 56.414000 usec, sleepcnt=1, ticks=100
+RT clock dt = 1.000055 secs for sleep of 1.000000 secs, err = 55.228000 usec, sleepcnt=1, ticks=100
+RT clock dt = 1.000042 secs for sleep of 1.000000 secs, err = 41.841000 usec, sleepcnt=1, ticks=100
+RT clock dt = 1.000057 secs for sleep of 1.000000 secs, err = 56.766000 usec, sleepcnt=1, ticks=100
+RT clock dt = 1.000050 secs for sleep of 1.000000 secs, err = 49.656000 usec, sleepcnt=1, ticks=100
+RT clock dt = 1.000050 secs for sleep of 1.000000 secs, err = 50.360000 usec, sleepcnt=1, ticks=100
+RT clock dt = 1.000039 secs for sleep of 1.000000 secs, err = 39.324000 usec, sleepcnt=1, ticks=100
+RT clock dt = 1.000039 secs for sleep of 1.000000 secs, err = 39.046000 usec, sleepcnt=1, ticks=100
+RT clock dt = 1.000042 secs for sleep of 1.000000 secs, err = 42.380000 usec, sleepcnt=1, ticks=100
+RT clock dt = 1.000041 secs for sleep of 1.000000 secs, err = 41.270000 usec, sleepcnt=1, ticks=100
+TEST COMPLETE
+```
+
+`clock_pitsig_test.c` is similar to `clock_nanosleep_test.c` in that it takes in arguments of the number of iterations and the number of milliseconds each iteration should take.  The difference, however, is that instead of using `nanosleep()` to perform the periodic timing, the program uses a timer and a signal to call the periodic process. The process outputs a timestamp, the number of ticks it was asleep, and the delta from the expected amount of time in microseconds.  This output can be seen below:
+
+```bash
+$ sudo ./clock_pitsig_test 10 1000
+Requested 10 iterations for 1000 msecs (1 sec, 0 nsec) with target=1.000000
+
+
+PIT based delay test for 1 secs, 0 nsecs
+
+
+Clock resolution:
+	0 secs, 0 usecs, 1 nsecs OR 0.000000 secs
+
+
+System ticks_per_sec=100
+
+Before adjustments to scheduling policy:
+Pthread Policy is SCHED_OTHER
+After adjustments to scheduling policy:
+Pthread Policy is SCHED_FIFO
+PIT RT clock = 1751212519.265828 secs, ticks = 1899654233, dt = 1.000076, err = -76.346000 usec
+PIT RT clock = 1751212520.265821 secs, ticks = 100, dt = 0.999993, err = 7.413000 usec
+PIT RT clock = 1751212521.265803 secs, ticks = 100, dt = 0.999983, err = 17.357000 usec
+PIT RT clock = 1751212522.265810 secs, ticks = 100, dt = 1.000007, err = -6.736000 usec
+PIT RT clock = 1751212523.265805 secs, ticks = 100, dt = 0.999995, err = 4.985000 usec
+PIT RT clock = 1751212524.265812 secs, ticks = 100, dt = 1.000007, err = -6.754000 usec
+PIT RT clock = 1751212525.265817 secs, ticks = 100, dt = 1.000006, err = -5.848000 usec
+PIT RT clock = 1751212526.265798 secs, ticks = 100, dt = 0.999981, err = 19.485000 usec
+PIT RT clock = 1751212527.265818 secs, ticks = 100, dt = 1.000020, err = -19.754000 usec
+PIT RT clock = 1751212528.265810 secs, ticks = 100, dt = 0.999993, err = 7.168000 usec
+Disabling interval timer with abort=1
+Test aborted
+TEST COMPLETE
+```
+
+`posix_clock.c` performs a single delay test of 3 seconds not taking in any user input.  Based off a defined value the test will either be ran in a realtime context using `SCHED_FIFO` or will be performed within a non-realtime context with `SCHED_OTHER`.  The defined value is commented out in the source code so it is not being ran in a realtime context.  The test does one `nanosleep()` and compares the actual sleep time to the expected sleep time of 3 seconds.  The output is seen below showing that the test had a considerable amount of error:
+
+```bash
+$ sudo ./posix_clock
+Before adjustments to scheduling policy:
+Pthread Policy is SCHED_OTHER
+
+
+POSIX Clock demo using system RT clock with resolution:
+	0 secs, 0 microsecs, 1 nanosecs
+
+RT clock start seconds = 1751212711, nanoseconds = 141664812
+RT clock stop seconds = 1751212714, nanoseconds = 141762205
+RT clock DT seconds = 3, nanoseconds = 97393
+Requested sleep seconds = 3, nanoseconds = 0
+
+Sleep loop count = 1
+RT clock delay error = 0, nanoseconds = 97393
+TEST COMPLETE
+```
+
+`posix_linux_demo.c` creates one thread considered the idle thread that loops for the duration of the test sleeping 1 second at a time.  The program also attaches a signal handler to output any received user signals while the main thread is emitting signals so that they will be received by the signal handler.  The idle thread and the signal handler share a mutex for a shared output buffer which allows each of them to add to the output of the program.  This can be seen below:
+
+```bash
+$ sudo ./posix_linux_demo
+Signal generator process 33694: Idle process to signal 33695
+THROW SIGNAL #### Signal 35 thrown with val=0
+***** signal CS Shared buffer = 
+CATCH #### Caught user signal 35 1 times with val=0, sival_ptr=0x5500000000
+This is the idle process 33695
+Signal generator exit_thread=0 (differnt copy than idle)
+THROW SIGNAL #### Signal 35 thrown with val=1
+***** signal CS Shared buffer = signal task was here!
+CATCH #### Caught user signal 35 2 times with val=1, sival_ptr=0x5500000001
+*****idle thread in CS Shared buffer = signal task was here!
+Signal generator exit_thread=0 (differnt copy than idle)
+THROW SIGNAL #### Signal 35 thrown with val=2
+***** signal CS Shared buffer = idle task was here!
+CATCH #### Caught user signal 35 3 times with val=2, sival_ptr=0x5500000002
+*****idle thread in CS Shared buffer = signal task was here!
+Signal generator exit_thread=0 (differnt copy than idle)
+THROW SIGNAL #### Signal 35 thrown with val=3
+CATCH #### Caught user signal 35 4 times with val=3, sival_ptr=0x5500000003
+***** signal CS Shared buffer = idle task was here!
+*****idle thread in CS Shared buffer = signal task was here!
+Signal generator exit_thread=0 (differnt copy than idle)
+THROW SIGNAL #### Signal 35 thrown with val=4
+***** signal CS Shared buffer = idle task was here!
+*****idle thread in CS Shared buffer = idle task was here!
+CATCH #### Caught user signal 35 5 times with val=4, sival_ptr=0x5500000004
+Signal generator exit_thread=0 (differnt copy than idle)
+*****idle thread in CS Shared buffer = idle task was here!
+CATCH #### Caught user signal 35 6 times with val=5, sival_ptr=0x5500000005
+THROW SIGNAL #### Signal 35 thrown with val=5
+***** signal CS Shared buffer = idle task was here!
+*****idle thread in CS Shared buffer = signal task was here!
+Signal generator exit_thread=0 (differnt copy than idle)
+THROW SIGNAL #### Signal 35 thrown with val=6
+***** signal CS Shared buffer = idle task was here!
+CATCH #### Caught user signal 35 7 times with val=6, sival_ptr=0x5500000006
+*****idle thread in CS Shared buffer = signal task was here!
+Signal generator exit_thread=0 (differnt copy than idle)
+THROW SIGNAL #### Signal 35 thrown with val=7
+CATCH #### Caught user signal 35 8 times with val=7, sival_ptr=0x5500000007
+***** signal CS Shared buffer = idle task was here!
+*****idle thread in CS Shared buffer = signal task was here!
+Signal generator exit_thread=0 (differnt copy than idle)
+THROW SIGNAL #### Signal 35 thrown with val=8
+***** signal CS Shared buffer = idle task was here!
+CATCH #### Caught user signal 35 9 times with val=8, sival_ptr=0x5500000008
+*****idle thread in CS Shared buffer = signal task was here!
+Signal generator exit_thread=0 (differnt copy than idle)
+THROW SIGNAL #### Signal 35 thrown with val=9
+***** signal CS Shared buffer = idle task was here!
+CATCH #### Caught user signal 35 10 times with val=9, sival_ptr=0x5500000009
+got expected signals, setting idle exit_thread=1
+*****idle thread in CS Shared buffer = signal task was here!
+Child idle thread doing a pthread_exit
+Signal generator exit_thread=0 (differnt copy than idle)
+Idle thread exited, process exiting
+Multithreaded child just shutdown
+
+All done
+```
+
+`posix_mq.c` is a very simple program that shows how to open a posix message queue, send a message on the queue, and receive it on the queue.  This program is executed in a single thread and the output is seen below:
+
+```bash
+$ sudo ./posix_mq
+sender opened mq
+send: message successfully sent
+receive: msg this is a test, and only a test, in the event of a real emergency, you would be instructed ... received with priority = 30, length = 95
+```
+
+`signal_demo.c` is a simple demo showing how to attach a realtime signal handler onto a process and how to send real time signals to the handler.  The program attaches the handler and then sends 9 signals to the handler before sleeping for three seconds and exiting.  The output is seen below:
+
+```bash
+$ sudo ./signal_demo
+**** CATCH Rx signal: SIGRTMIN+1, value: 1
+**** THROW signal: signo=35, value=1
+**** CATCH Rx signal: SIGRTMIN+1, value: 2
+**** THROW signal: signo=35, value=2
+**** CATCH Rx signal: SIGRTMIN+1, value: 3
+**** THROW signal: signo=35, value=3
+**** CATCH Rx signal: SIGRTMIN+2, value: 1
+**** THROW signal: signo=36, value=1
+**** CATCH Rx signal: SIGRTMIN+2, value: 2
+**** THROW signal: signo=36, value=2
+**** CATCH Rx signal: SIGRTMIN+2, value: 3
+**** THROW signal: signo=36, value=3
+**** CATCH Rx signal: SIGRTMIN+3, value: 1
+**** THROW signal: signo=37, value=1
+**** CATCH Rx signal: SIGRTMIN+3, value: 2
+**** THROW signal: signo=37, value=2
+**** CATCH Rx signal: SIGRTMIN+3, value: 3
+**** THROW signal: signo=37, value=3
+```
+
+**POSIX_MQ_LOOP**
+
+`posix_mq.c` and `heap_mq.c` have the exact same output so I will cover them in the same section.  Both programs open a message queue and start two threads, `sender()` and `receiver()`, that pass messages between each other indefinitely.  Sender sends data with a priority of 30 while receiver reads the messages and outputs the message + priority of the message.  This loops indefinitely so I will provide a small amount of the output below:
+
+```bash
+$ sudo ./posix_mq
+
+Sender Thread Created with rc=0
+sender - thread entry
+sender - sending message of size=93
+send: message successfully sent, rc=0
+sender - sending message of size=93
+send: message successfully sent, rc=0
+sender - sending message of size=93
+send: message successfully sent, rc=0
+sender - sending message of size=93
+send: message successfully sent, rc=0
+sender - sending message of size=93
+send: message successfully sent, rc=0
+receiver - thread entry
+sender - sending message of size=93
+send: message successfully sent, rc=0
+sender - sending message of size=93
+send: message successfully sent, rc=0
+sender - sending message of size=93
+receiver - awaiting message
+
+ Receiver Thread Created with rc=0
+pthread join send
+send: message successfully sent, rc=0
+sender - sending message of size=93
+receive: msg This is a test, and only a test, in the event of real emergency, you would be instructed.... received with priority = 30, rc = 93
+receiver - awaiting message
+receive: msg This is a test, and only a test, in the event of real emergency, you would be instructed.... received with priority = 30, rc = 93
+send: message successfully sent, rc=0
+sender - sending message of size=93
+receiver - awaiting message
+receive: msg This is a test, and only a test, in the event of real emergency, you would be instructed.... received with priority = 30, rc = 93
+receiver - awaiting message
+send: message successfully sent, rc=0
+sender - sending message of size=93
+receive: msg This is a test, and only a test, in the event of real emergency, you would be instructed.... received with priority = 30, rc = 93
+receiver - awaiting message
+send: message successfully sent, rc=0
+sender - sending message of size=93
+receive: msg This is a test, and only a test, in the event of real emergency, you would be instructed.... received with priority = 30, rc = 93
+receiver - awaiting message
+send: message successfully sent, rc=0
+sender - sending message of size=93
+send: message successfully sent, rc=0
+sender - sending message of size=93
+receive: msg This is a test, and only a test, in the event of real emergency, you would be instructed.... received with priority = 30, rc = 93
+receiver - awaiting message
+receive: msg This is a test, and only a test, in the event of real emergency, you would be instructed.... received with priority = 30, rc = 93
+send: message successfully sent, rc=0
+sender - sending message of size=93
+receiver - awaiting message
+```
+
 > A: First, re-write the simple message queue demonstration code so that it uses RT-Linux Pthreads (FIFO) instead of SCHED_OTHER, and then write a brief paragraph describing how the use of a heap message queue and a simple message queue for applications are similar and how they are different.
 
-TODO:
+I have added a new file, `problem-4/POSIX-Examples-Updated/posix_mq_realtime.c`, which rewrites the basic message queue example to spawn the `sender()` and `receiver()` functions as their own posix threads.  The output does change in this example compared to the original.  This output can be seen below:
+
+```bash
+$ sudo ./posix_mq_realtime
+sender opened mq
+receive: msg "This is a test, and only a test, in the event of real emergency, you would be instructed...." received with priority = 30, length = 93
+send: message successfully sent
+```
+
+Heap and simple message queues are similar in that they both provide a FIFO queue for passing messages between different parts of the code.  This is useful in that it provides a method of passing data that doesn't require a Mutex to synchronize the communication.  It also provides multiple messages to queue up so that the receiver can see how the messages/data change over time.  The difference is that simple message queues are statically allocated and all messages take up the same amount of space.  This improves speed and makes them more deterministic but it reduces the runtime flexibility of the queue.  Heap queues dynamically allocate space on the heap for the messages at runtime which makes them much more flexibile but this increases runtime memory consumption and makes them more deterministic since allocating space on the heap can be slow.
 
 > B: Message queues are often suggested as a better way to avoid MUTEX priority inversion. Would you agree that this really circumvents the problem of unbounded inversion? If so why, if not, why not?
 
-TODO:
+I don't agree that it fully circumvents the issue of unbounded priority inversion.  This is because high priority tasks can still be blocked while waiting on a message to arrive from a lower priority thread that is being indefinitely blocked by a medium priority thread.  This is the same exact issue that mutexes have just with extra steps.  The workaround for this is providing a timeout for receiving the message so that the higher priority task can still continue on without being fully blocked by the lower priority task.
 
 ## Exercise 5
 
@@ -491,8 +813,28 @@ TODO:
 
 > A: Describe how it might be used if software caused an indefinite deadlock.
 
-TODO:
+The Linux watchdog is a daemon that must be pet within a specified time window or else it will cause the kernel to restart the system.  In the case of an unbounded priority inversion, you could have the lowest priority task in the program pet the watchdog occasionally.  If the priority inversion ever occurs, the watchdog task wouldn't be able to run which would eventually cause the system to reset potentially fixing the inversion.  This is similar to how I have done it at my previous jobs both on VxWorks and Linux.
 
 > B: Next, to explore timeouts, use your code from #2 and create a thread that waits on a MUTEX semaphore for up to 10 seconds and then un-blocks and prints out “No new data available at <time>” and then loops back to wait for a data update again. Use a variant of the pthread_mutex_lock called pthread_mutex_timedlock to solve this programming problem.
 
-TODO:
+I have added a new C file to `problem-5/seqgen3.c` in the repository that implements what is outlined in this problem as well as a capture of its output in the syslogs at `problem-5/problem_5_output.log`.  I added in a new mutex named `service_3_mutex` which is locked by the main thread before spawning in the new thread, `Service_3`, which uses a `pthread_mutex_timedlock()` to try and acquire the mutex with a 10 second timeout.  Since the mutex is locked by the main thread, it will always hit the 10 second timeout in which it will output to syslogs “No new data available at <time>”.  Below is an example of when `Service_2` is being ran as well as `Service_3`, which is lower priority, is timing out on its mutex:
+
+```bash
+Jun 29 11:37:05 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   20: lat=70.00000, lon=-80.00000, alt=149.00000, roll=0.91295, pitch=-0.52530, yaw=0.40808 @ sec=1823098.216962052
+Jun 29 11:37:05 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  2: lat=70.00000, lon=-80.00000, alt=149.00000, roll=0.91295, pitch=-0.52530, yaw=0.40808 @ sec=1823098.216962052
+Jun 29 11:37:05 arthur seqgen3[34144]: No new data available at 1823098.217205571
+
+Jun 29 11:37:15 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   30: lat=80.00000, lon=-100.00000, alt=148.50000, roll=-0.98803, pitch=0.06625, yaw=0.15425 @ sec=1823108.217067120
+Jun 29 11:37:15 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  3: lat=80.00000, lon=-100.00000, alt=148.50000, roll=-0.98803, pitch=0.06625, yaw=0.15425 @ sec=1823108.217067120
+Jun 29 11:37:15 arthur seqgen3[34144]: No new data available at 1823108.217384602
+
+Jun 29 11:37:25 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   40: lat=90.00000, lon=-120.00000, alt=148.00000, roll=0.74511, pitch=-0.59836, yaw=-0.66694 @ sec=1823118.217170225
+Jun 29 11:37:25 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  4: lat=90.00000, lon=-120.00000, alt=148.00000, roll=0.74511, pitch=-0.59836, yaw=-0.66694 @ sec=1823118.217170225
+Jun 29 11:37:25 arthur seqgen3[34144]: No new data available at 1823118.217549392
+
+Jun 29 11:37:35 arthur seqgen3[34144]: S1 1 Hz on core 2 for release   50: lat=100.00000, lon=-140.00000, alt=147.50000, roll=-0.26237, pitch=0.75983, yaw=0.96497 @ sec=1823128.217260219
+Jun 29 11:37:35 arthur seqgen3[34144]: S2 0.1 Hz on core 2 for release  5: lat=100.00000, lon=-140.00000, alt=147.50000, roll=-0.26237, pitch=0.75983, yaw=0.96497 @ sec=1823128.217260219
+Jun 29 11:37:35 arthur seqgen3[34144]: No new data available at 1823128.217715756
+```
+
+You can see that the mutex timeout is a little less accurate than the sequencer based off its timestamp.  I believe this is due to using the `CLOCK_REALTIME` clock instead of the `CLOCK_MONOTONIC` clock which is a bit more accurate.  Other than this, I believe all requirements for this problem have been satisfied.
